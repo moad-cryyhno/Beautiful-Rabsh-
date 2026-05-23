@@ -112,12 +112,13 @@
         .toggle-switch::after { content:''; width:22px; height:22px; background:#fff; border-radius:50%; position:absolute; top:2px; right:2px; transition:var(--transition-fast); }
         .toggle-switch.active::after { right:24px; }
         .connection-bar { position:fixed; top:0; left:50%; transform:translateX(-50%); width:100%; max-width:500px; background:var(--danger); color:#fff; text-align:center; padding:4px; font-size:0.7rem; z-index:300; font-weight:600; display:none; }
-        .account-type-tag { padding:2px 8px; border-radius:10px; font-size:0.65rem; font-weight:700; }
+        .account-type-tag { padding:2px 8px; border-radius:10px; font-size:0.65rem; font-weight:700; display:inline-block; }
         .account-type-tag.store { background:rgba(255,107,26,0.15); color:var(--accent); }
         .account-type-tag.user { background:rgba(59,130,246,0.15); color:var(--blue); }
     </style>
 </head>
 <body>
+    <!-- Splash screen -->
     <div id="splash" style="position:fixed;inset:0;z-index:999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:0.5s;">
         <div style="font-size:3rem;font-weight:900;background:linear-gradient(135deg,#ff6b1a,#ff9a5c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pulse 2s infinite,float 3s infinite;">🔥 رابش الجميل</div>
         <p style="color:var(--text2);margin-top:4px;font-size:0.85rem;">RABASH ALJMAIL</p>
@@ -157,7 +158,7 @@
                 <p style="text-align:center;margin-top:12px;font-size:0.8rem;cursor:pointer;" onclick="navigateTo('login')">لديك حساب؟ <span style="color:var(--accent);">سجل دخول</span></p>
             </div>
         </div>
-        <!-- MAIN -->
+        <!-- MAIN APP -->
         <div id="screen-main" class="screen">
             <div class="header">
                 <span class="brand">🏗️ رابش الجميل</span>
@@ -222,8 +223,7 @@
         let currentPage = 'home';
         let activeCat = 'الكل';
         let searchQ = '';
-        let selImg = null, chatStoreId = null;
-        let shopLogoData = null;
+        let selImg = null, chatStoreId = null, shopLogoData = null;
         const CATS = ['الكل','بطاريات','مكائن','جنوط','أبواب','نحاس','حديد','إلكترونيات','قطع غيار','متنوع'];
         let renderLock = false;
         let postsCache = [];
@@ -233,7 +233,7 @@
         function navigateTo(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById('screen-' + id);
-            if (target) { target.classList.add('active'); }
+            if (target) target.classList.add('active');
             if (id === 'main') { switchTab('home'); updateCredits(); }
             if (id === 'admin') refreshAdmin();
         }
@@ -241,13 +241,14 @@
         function switchTab(page) {
             if (!fbConnected && page !== 'settings') { showToast('لا يوجد اتصال بالسيرفر', 'error'); return; }
             if (page === 'settings') { navigateTo('settings'); return; }
-            currentPage = page;
-            renderPage();
-            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-            const btn = document.querySelector(`.nav-item[data-page="${page}"]`);
-            if (btn) btn.classList.add('active');
-            const content = document.getElementById('main-content');
-            if (content) content.scrollTop = 0;
+            if (['home','stores','add','profile','notifications','support'].includes(page)) {
+                currentPage = page;
+                renderPage();
+                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+                const btn = document.querySelector(`.nav-item[data-page="${page}"]`);
+                if (btn) btn.classList.add('active');
+                document.getElementById('main-content').scrollTop = 0;
+            }
         }
 
         function toggleRegType() {
@@ -280,7 +281,7 @@
                 if (!user.approved) { showToast('الحساب قيد المراجعة', 'error'); return; }
                 if (user.banned) { showToast('تم حظر حسابك', 'error'); return; }
                 currentUser = user;
-                localStorage.setItem('rabash_user_final2', JSON.stringify(user));
+                localStorage.setItem('rabash_user_final3', JSON.stringify(user));
                 navigateTo('main');
                 showToast(`مرحباً ${user.username}`, 'success');
             } catch (e) { showToast('خطأ في الاتصال', 'error'); console.error(e); }
@@ -312,7 +313,7 @@
             finally { if (btn) btn.disabled = false; }
         }
 
-        function authLogout() { currentUser = null; localStorage.removeItem('rabash_user_final2'); navigateTo('login'); showToast('تم الخروج'); }
+        function authLogout() { currentUser = null; localStorage.removeItem('rabash_user_final3'); navigateTo('login'); showToast('تم الخروج'); }
         function promptAdminCode() { const code = prompt('رمز المطور:'); if (code === '2026') navigateTo('admin'); else if (code) showToast('رمز خاطئ', 'error'); }
 
         // ==================== ADMIN ====================
@@ -379,18 +380,15 @@
 
         async function renderHome(c) {
             const now = Date.now();
-            if (postsCache.length && (now - lastFetch < 3000)) {
-                displayPosts(c, postsCache);
-            } else {
-                c.innerHTML = `<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>`;
-            }
+            if (postsCache.length && (now - lastFetch < 3000)) { displayPosts(c, postsCache); }
+            else { c.innerHTML = `<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>`; }
             try {
                 const [pS, nS] = await Promise.all([db.ref('posts').once('value'), db.ref('admin_notifications').limitToLast(1).once('value')]);
                 let ann = ''; nS.forEach(ch => { ann = `<div class="glass" style="padding:10px;margin-bottom:10px;border-right:3px solid var(--accent);font-size:0.8rem;">📢 ${ch.val().text}</div>`; });
                 postsCache = []; pS.forEach(ch => postsCache.push({id:ch.key,...ch.val()}));
                 lastFetch = Date.now();
                 displayPosts(c, postsCache, ann);
-            } catch (e) { console.error(e); if (!postsCache.length) c.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p></div>'; }
+            } catch (e) { if (!postsCache.length) c.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p></div>'; }
         }
 
         function displayPosts(c, posts, ann = '') {
@@ -399,9 +397,8 @@
             if (searchQ) filtered = filtered.filter(p => (p.title||'').includes(searchQ)||(p.description||'').includes(searchQ));
             filtered.sort((a,b) => (b.createdAt||0)-(a.createdAt||0));
             c.innerHTML = (ann||'') + `<input class="form-input" placeholder="🔍 بحث..." value="${searchQ}" oninput="setFilter('search',this.value)" style="border-radius:30px;margin-bottom:8px;"><div class="chip-row">${CATS.map(x=>`<span class="chip${x===activeCat?' active':''}" onclick="setFilter('cat','${x}')">${x}</span>`).join('')}</div>` +
-                filtered.map(p => `<div class="card" onclick="openPost('${p.id}')"><div class="card-img">${p.image?`<img src="${p.image}" loading="lazy">`:'📦'}<div class="card-gradient"></div><span class="card-badge">${p.category||''}</span>${p.price?`<span class="card-price">💰${p.price}د.ل</span>`:''}<span class="card-fav" onclick="event.stopPropagation();showToast('تم الحفظ','success')">🤍</span></div><div class="card-body"><h3>${p.title}</h3><div class="meta"><span>🏬${p.storeName||''}</span><span>📍الجميل</span><span>👁${p.views||0}</span></div></div></div>`).join('') +
-                (filtered.length===0?'<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p></div>':'') +
-                '<footer style="text-align:center;padding:16px;font-size:0.6rem;color:var(--text3);border-top:1px solid var(--border);margin-top:12px;">© جميع الحقوق محفوظة لشركة A:M</footer>';
+                filtered.map(p => `<div class="card" onclick="openPost('${p.id}')"><div class="card-img">${p.image?`<img src="${p.image}" loading="lazy">`:'📦'}<div class="card-gradient"></div><span class="card-badge">${p.category||''}</span>${p.price?`<span class="card-price">💰${p.price}د.ل</span>`:''}</div><div class="card-body"><h3>${p.title}</h3><div class="meta"><span>🏬${p.storeName||''}</span><span>📍الجميل</span></div></div></div>`).join('') +
+                (filtered.length===0?'<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p></div>':'');
         }
 
         function setFilter(k, v) { if (k==='cat') activeCat = v; else if (k==='search') searchQ = v; renderPage(); }
@@ -542,14 +539,54 @@
 
         function startChat(sid) { chatStoreId=sid; document.getElementById('chat-modal')?.classList.remove('hidden'); loadChat(sid); }
         function closeChat() { document.getElementById('chat-modal')?.classList.add('hidden'); chatStoreId=null; }
-        async function loadChat(sid) { /* ... same as before ... */ }
-        async function sendChat(sid) { /* ... same as before ... */ }
+        async function loadChat(sid) {
+            try {
+                const snap=await db.ref('chats/'+sid).limitToLast(30).once('value');
+                let msgs=[]; snap.forEach(ch=>msgs.push(ch.val()));
+                const content=document.getElementById('chat-content'); if(!content)return;
+                content.innerHTML=`<h4>💬 المحادثة</h4><div id="chatmsgs" style="max-height:45vh;overflow-y:auto;">${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser?.id?'me':'other'}"><strong>${m.senderName}:</strong> ${m.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px;"><input id="chinput" class="form-input" placeholder="رسالة..." style="flex:1;"><button class="btn btn-sm btn-primary" onclick="sendChat('${sid}')">إرسال</button></div><button class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;" onclick="closeChat()">إغلاق</button>`;
+                setTimeout(()=>{const el=document.getElementById('chatmsgs');if(el)el.scrollTop=el.scrollHeight;},100);
+            } catch (e) { console.error(e); }
+        }
+        async function sendChat(sid) {
+            if (!currentUser) { showToast('سجل الدخول','error'); return; }
+            const input=document.getElementById('chinput'); const txt=input?.value.trim(); if(!txt)return;
+            try { await db.ref('chats/'+sid).push({senderId:currentUser.id,senderName:currentUser.username,text:txt,createdAt:Date.now()}); if(input)input.value=''; loadChat(sid); } catch (e) { console.error(e); }
+        }
 
-        function renderNotifs(c) { /* ... same ... */ }
-        function renderProfile(c) { /* ... same with upgrade to store ... */ }
-        async function upgradeToStore() { /* ... same ... */ }
-        function renderSupport(c) { /* ... same ... */ }
-        async function sendSupport() { /* ... same ... */ }
+        function renderNotifs(c) {
+            if (!currentUser) { c.innerHTML='<div class="empty">سجل الدخول</div>'; return; }
+            c.innerHTML='<div class="skeleton" style="height:60px;margin:6px 0;"></div>';
+            db.ref('user_notifications/'+currentUser.id).once('value').then(snap=>{
+                let arr=[]; snap.forEach(ch=>arr.push(ch.val())); arr.reverse();
+                c.innerHTML='<div class="section-title">🔔 إشعاراتك</div>'+(arr.length===0?'<div class="empty"><div class="empty-icon">🔔</div><p>لا توجد</p></div>':arr.map(n=>`<div class="glass" style="padding:10px;margin:4px 0;font-size:0.82rem;">${n.text}</div>`).join(''));
+            }).catch(()=>{c.innerHTML='<div class="empty">خطأ</div>';});
+        }
+
+        function renderProfile(c) {
+            if (!currentUser) { c.innerHTML='<div class="empty">سجل الدخول</div>'; return; }
+            const isStore = currentUser.accountType === 'store';
+            c.innerHTML = `<div class="glass" style="text-align:center;padding:20px;margin-bottom:12px;"><div style="font-size:3rem;">👤</div><h2>${currentUser.username}</h2><p>📱 ${currentUser.phone}</p><p><span class="account-type-tag ${isStore?'store':'user'}">${isStore?'🏪 تاجر (متجر)':'👤 مستخدم عادي'}</span></p><p>🪙 <strong id="profile-credits">${currentUser.credits||0}</strong></p>${!isStore?'<button class="btn btn-sm btn-outline" onclick="upgradeToStore()">🔄 ترقية لمتجر</button>':''}</div><button class="btn btn-outline btn-sm" onclick="showPrivacy()">📄 الخصوصية</button><button class="btn btn-outline btn-sm" style="margin-top:6px;" onclick="switchTab('support')">💬 الدعم</button><button class="btn btn-danger btn-sm" style="margin-top:10px;width:100%;" onclick="authLogout()">🚪 خروج</button>`;
+            setTimeout(()=>{db.ref('users/'+currentUser.id+'/credits').once('value').then(snap=>{const el=document.getElementById('profile-credits');if(el)el.textContent=snap.val()||0;}).catch(()=>{});},300);
+        }
+
+        async function upgradeToStore() {
+            if (!currentUser||currentUser.accountType==='store') return;
+            if (!confirm('ترقية لمتجر تتطلب تحويل 5 دينار للرقم 0934214112. متابعة؟')) return;
+            const provider=prompt('الشبكة:'); const transfer=prompt('رقم المحول:');
+            if (!provider||!transfer) { showToast('ادخل البيانات','error'); return; }
+            try { await db.ref('registrationRequests').push({username:currentUser.username,phone:currentUser.phone,password:currentUser.password,accountType:'store',provider,transferPhone:transfer,status:'pending',createdAt:Date.now()}); showToast('تم الإرسال','success'); } catch (e) { showToast('خطأ','error'); }
+        }
+
+        function renderSupport(c) {
+            if (!currentUser) { c.innerHTML='<div class="empty">سجل الدخول</div>'; return; }
+            c.innerHTML='<div class="skeleton" style="height:80px;"></div>';
+            db.ref('support_chats').orderByChild('userId').equalTo(currentUser.id).once('value').then(snap=>{
+                let msgs=[]; snap.forEach(ch=>msgs.push(ch.val())); msgs.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+                c.innerHTML=`<h3>💬 تواصل مع الدعم</h3><div id="supp-msgs" style="max-height:50vh;overflow-y:auto;">${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser.id?'me':'other'}"><strong>${m.senderName}:</strong> ${m.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px;"><input id="supp-input" class="form-input" placeholder="رسالتك..." style="flex:1;"><button class="btn btn-sm btn-primary" onclick="sendSupport()">إرسال</button></div>`;
+            }).catch(()=>{c.innerHTML='<div class="empty">خطأ</div>';});
+        }
+        async function sendSupport() { const input=document.getElementById('supp-input'); const txt=input?.value.trim(); if(!txt)return; try { await db.ref('support_chats').push({userId:currentUser.id,senderName:currentUser.username,senderId:currentUser.id,text:txt,createdAt:Date.now()}); if(input)input.value=''; switchTab('support'); } catch (e) { console.error(e); } }
 
         function showPrivacy() {
             const modal = document.getElementById('detail-modal');
@@ -582,14 +619,17 @@
             `;
         }
 
-        async function updateCredits() { /* ... */ }
+        async function updateCredits() {
+            if (!currentUser) return;
+            try { const snap=await db.ref('users/'+currentUser.id+'/credits').once('value'); const el=document.getElementById('header-credits'); if(el){el.textContent='🪙 '+(snap.val()||0);el.classList.remove('hidden');} } catch (e) {}
+        }
 
         // ==================== INIT ====================
         setTimeout(()=>{
             const splash=document.getElementById('splash');
             if(splash){splash.style.opacity='0';splash.style.pointerEvents='none';setTimeout(()=>splash.remove(),500);}
-            const saved=localStorage.getItem('rabash_user_final2');
-            if(saved){try{const u=JSON.parse(saved);db.ref('users/'+u.id).once('value').then(snap=>{if(snap.exists()&&snap.val().approved&&!snap.val().banned){currentUser={id:u.id,...snap.val()};navigateTo('main');}}).catch(()=>{localStorage.removeItem('rabash_user_final2');});}catch(e){localStorage.removeItem('rabash_user_final2');}}
+            const saved=localStorage.getItem('rabash_user_final3');
+            if(saved){try{const u=JSON.parse(saved);db.ref('users/'+u.id).once('value').then(snap=>{if(snap.exists()&&snap.val().approved&&!snap.val().banned){currentUser={id:u.id,...snap.val()};navigateTo('main');}}).catch(()=>{localStorage.removeItem('rabash_user_final3');});}catch(e){localStorage.removeItem('rabash_user_final3');}}
         },1600);
     </script>
 </body>
