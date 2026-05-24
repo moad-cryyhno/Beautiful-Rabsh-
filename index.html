@@ -6,10 +6,11 @@
     <meta name="theme-color" content="#0a0a10">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>رابش الجميل | سوق الخردة وقطع الغيار</title>
+    <meta name="description" content="رابش الجميل - سوق الخردة وقطع غيار السيارات الذكي في ليبيا">
+    <title>🔥 رابش الجميل | سوق الخردة وقطع الغيار الذكي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js">
@@ -30,15 +31,17 @@
             --accent: #ff6b1a;
             --accent2: #ff8540;
             --accent3: #ff5500;
+            --accent-glow: rgba(255, 107, 26, 0.5);
             --danger: #ff3b3b;
             --success: #2ecc71;
             --gold: #f0b90b;
             --blue: #3b82f6;
+            --purple: #8b5cf6;
             --radius: 12px;
             --radius2: 18px;
             --radius3: 24px;
             --radius4: 32px;
-            --font: 'Cairo', system-ui, sans-serif;
+            --font: 'Cairo', 'Tajawal', system-ui, sans-serif;
             --safe: env(safe-area-inset-bottom, 16px);
             --glass: rgba(15, 15, 24, 0.75);
             --glass2: rgba(20, 20, 32, 0.7);
@@ -52,19 +55,20 @@
             --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --neon-glow: 0 0 10px rgba(255, 107, 26, 0.6), 0 0 30px rgba(255, 107, 26, 0.3);
         }
         .light-mode {
-            --bg-deep: #f5f5f8;
-            --bg: #fafafd;
+            --bg-deep: #f0f0f5;
+            --bg: #f5f5fa;
             --bg2: #ffffff;
             --card: #ffffff;
             --card2: #f8f8fc;
-            --input: #f0f0f5;
-            --border: #e2e2ea;
-            --border2: #d5d5e0;
-            --text: #1a1a28;
-            --text2: #555568;
-            --text3: #8888a0;
+            --input: #eef0f7;
+            --border: #dde0ea;
+            --border2: #ccd0db;
+            --text: #1a1a2e;
+            --text2: #4a4a60;
+            --text3: #7a7a95;
             --glass: rgba(255, 255, 255, 0.8);
             --glass2: rgba(255, 255, 255, 0.65);
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
@@ -72,6 +76,7 @@
             --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
             --glow: 0 0 25px rgba(255, 107, 26, 0.2);
             --glow-lg: 0 0 50px rgba(255, 107, 26, 0.3);
+            --neon-glow: 0 0 10px rgba(255, 107, 26, 0.4), 0 0 30px rgba(255, 107, 26, 0.15);
         }
         * {
             margin: 0;
@@ -191,6 +196,26 @@
                 transform: rotate(360deg);
             }
         }
+        @keyframes neonFlicker {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
+        }
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
         .glass {
             background: var(--glass);
             backdrop-filter: blur(24px);
@@ -199,9 +224,18 @@
             box-shadow: var(--shadow);
             border-radius: var(--radius2);
         }
+        .glass-strong {
+            background: var(--glass2);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-lg);
+            border-radius: var(--radius3);
+        }
         .header {
-            background: rgba(5, 5, 8, 0.85);
+            background: rgba(5, 5, 8, 0.9);
             backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
             border-bottom: 1px solid var(--border);
             padding: 10px 16px;
             display: flex;
@@ -212,14 +246,17 @@
             z-index: 50;
         }
         .header .brand {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #ff6b1a, #ff9a5c);
+            background: linear-gradient(135deg, #ff6b1a, #ff9a5c, #ff6b1a);
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: flex;
             align-items: center;
             gap: 6px;
+            animation: gradientShift 3s ease infinite;
         }
         .icon-btn {
             width: 34px;
@@ -240,6 +277,7 @@
             transform: scale(0.9);
             background: rgba(255, 107, 26, 0.15);
             border-color: var(--accent);
+            box-shadow: var(--neon-glow);
         }
         .badge {
             position: absolute;
@@ -274,6 +312,7 @@
             max-width: 480px;
             background: var(--glass);
             backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: var(--radius4);
             display: flex;
@@ -337,7 +376,7 @@
             justify-content: center;
             border: none;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(255, 107, 26, 0.5);
+            box-shadow: 0 6px 24px rgba(255, 107, 26, 0.5), 0 0 20px rgba(255, 107, 26, 0.3);
             animation: glowPulse 2.5s infinite;
             position: relative;
             top: -16px;
@@ -379,6 +418,7 @@
             inset: 0;
             background: rgba(255, 255, 255, 0);
             transition: var(--transition-fast);
+            border-radius: inherit;
         }
         .btn:active::after {
             background: rgba(255, 255, 255, 0.08);
@@ -389,11 +429,18 @@
             width: 100%;
             box-shadow: 0 4px 18px rgba(255, 107, 26, 0.3);
         }
+        .btn-primary:hover {
+            box-shadow: 0 6px 28px rgba(255, 107, 26, 0.45);
+        }
         .btn-outline {
             background: transparent;
             border: 2px solid var(--border2);
             color: var(--text);
             width: 100%;
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            box-shadow: var(--glow);
         }
         .btn-sm {
             padding: 7px 13px;
@@ -417,10 +464,20 @@
             background: var(--blue);
             color: #fff;
         }
+        .btn-purple {
+            background: var(--purple);
+            color: #fff;
+        }
         .btn-ghost {
             background: var(--card);
             color: var(--text2);
             border: 1px solid var(--border);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #f0b90b, #e0a800);
+            color: #000;
+            font-weight: 800;
+            box-shadow: 0 4px 18px rgba(240, 185, 11, 0.4);
         }
         .form-group {
             margin-bottom: 12px;
@@ -608,6 +665,7 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 100;
             display: flex;
             align-items: flex-end;
@@ -648,6 +706,7 @@
         .toast {
             background: var(--card);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--accent);
             color: #fff;
             padding: 11px 18px;
@@ -871,30 +930,113 @@
         .star-rating .star.filled {
             color: #f0b90b;
         }
-        .pull-indicator {
+        .dashboard-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius2);
+            padding: 16px;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .dashboard-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(255, 107, 26, 0.6), 0 0 30px rgba(255, 107, 26, 0.3);
+            animation: neonFlicker 2s infinite;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(255, 107, 26, 0.1), rgba(255, 107, 26, 0.02));
+            border: 1px solid rgba(255, 107, 26, 0.2);
+            border-radius: var(--radius3);
+            padding: 20px;
             text-align: center;
-            padding: 8px;
-            color: var(--text3);
-            font-size: 0.7rem;
-            display: none;
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 26, 0.08) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 4px;
+        }
+        .status-dot.online {
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(46, 204, 113, 0.6);
+        }
+        .status-dot.offline {
+            background: var(--text3);
+        }
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition-fast);
+            flex: 1;
+            min-width: 100px;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.78rem;
+        }
+        .quick-action:active {
+            transform: scale(0.95);
+            background: rgba(255, 107, 26, 0.1);
+        }
+        .quick-action:hover {
+            border-color: var(--accent);
+        }
+        @media (max-width: 380px) {
+            .nav-item {
+                font-size: 0.55rem;
+                padding: 4px 6px;
+            }
+            .nav-item svg {
+                width: 19px;
+                height: 19px;
+            }
+            .nav-add {
+                width: 40px;
+                height: 40px;
+                top: -12px;
+            }
+            .nav-add svg {
+                width: 20px;
+                height: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- شاشة البداية -->
     <div id="splash" style="position:fixed;inset:0;z-index:999;background:var(--bg-deep);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:0.5s;">
-        <div style="font-size:3rem;font-weight:900;background:linear-gradient(135deg,#ff6b1a,#ff9a5c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:pulse 2s infinite,float 3s infinite;">🔥 رابش جميل</div>
-        <p style="color:var(--text2);margin-top:4px;font-size:0.85rem;">سوق الخردة وقطع الغيار في الجميل</p>
+        <div style="font-size:3rem;font-weight:900;background:linear-gradient(135deg,#ff6b1a,#ff9a5c,#ff6b1a);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:pulse 2s infinite,float 3s infinite,gradientShift 3s ease infinite;">🔥 رابش جميل</div>
+        <p style="color:var(--text2);margin-top:4px;font-size:0.85rem;">سوق الخردة وقطع الغيار الذكي في الجميل</p>
         <div style="width:40px;height:3px;background:var(--border);border-radius:3px;margin-top:18px;overflow:hidden;"><div style="width:40%;height:100%;background:var(--accent);border-radius:3px;animation:shimmer 1.2s infinite;"></div></div>
     </div>
-    <div class="connection-bar" id="connection-bar">⚠️ انقطع الاتصال بقاعدة البيانات</div>
+    <div class="connection-bar" id="connection-bar">⚠️ انقطع الاتصال بقاعدة البيانات - جاري إعادة المحاولة...</div>
     <div id="app" style="position:relative;height:100vh;height:100dvh;overflow:hidden;">
-        <!-- تسجيل الدخول -->
         <div id="screen-login" class="screen active">
             <div class="content" style="display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;">
-                <div style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#ff6b1a,#ff9a5c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px;">🔥 رابش جميل</div>
-                <p style="color:var(--text2);margin-bottom:24px;font-size:0.85rem;">سوق الخردة وقطع الغيار في الجميل</p>
-                <div class="glass" style="padding:24px 18px;width:100%;">
+                <div style="font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,#ff6b1a,#ff9a5c,#ff6b1a);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;animation:gradientShift 3s ease infinite;">🔥 رابش جميل</div>
+                <p style="color:var(--text2);margin-bottom:24px;font-size:0.85rem;">سوق الخردة وقطع الغيار الذكي في الجميل</p>
+                <div class="glass-strong" style="padding:24px 18px;width:100%;">
                     <h3 style="margin-bottom:16px;font-size:1.1rem;text-align:center;">🔐 تسجيل الدخول</h3>
                     <div class="form-group"><label>📱 رقم الهاتف</label><input class="form-input" type="tel" id="login-phone" placeholder="09xxxxxxxx" dir="ltr"></div>
                     <div class="form-group"><label>🔒 كلمة المرور</label><input class="form-input" type="password" id="login-pass" placeholder="********"></div>
@@ -904,14 +1046,13 @@
                 </div>
             </div>
         </div>
-        <!-- التسجيل -->
         <div id="screen-register" class="screen">
             <div class="content" style="padding:20px 14px;">
                 <h2 style="text-align:center;color:var(--accent);margin-bottom:12px;">📝 تسجيل حساب جديد</h2>
                 <div class="form-group"><label>👤 الاسم الكامل</label><input class="form-input" id="reg-name" placeholder="اسمك"></div>
                 <div class="form-group"><label>📱 رقم الهاتف</label><input class="form-input" type="tel" id="reg-phone" dir="ltr"></div>
                 <div class="form-group"><label>🔒 كلمة المرور</label><input class="form-input" type="password" id="reg-pass"></div>
-                <div class="form-group"><label>🛡️ نوع الحساب</label><select class="form-input" id="reg-account-type" onchange="toggleRegType()"><option value="user">👤 مستخدم عادي (مجاني)</option><option value="store">🏪 متجر (يطلب 5 دينار)</option></select></div>
+                <div class="form-group"><label>🛡️ نوع الحساب</label><select class="form-input" id="reg-account-type" onchange="toggleRegType()"><option value="user">👤 مستخدم عادي (مجاني)</option><option value="store">🏪 متجر (يتطلب اشتراك 5 دينار)</option></select></div>
                 <div id="reg-store-section" style="display:none;">
                     <div class="glass" style="padding:10px;border-radius:var(--radius);margin-bottom:10px;color:#fcd34d;font-size:0.78rem;border:1px solid rgba(240,185,11,0.3);">⚠️ للتفعيل: حول <strong style="color:#fff;">5 دينار</strong> للرقم <strong style="color:#fff;">0934214112</strong></div>
                     <div class="form-group"><label>📡 شركة الخط</label><select class="form-input" id="reg-provider"><option>مدار</option><option>ليبيانا</option></select></div>
@@ -921,7 +1062,6 @@
                 <p style="text-align:center;margin-top:12px;font-size:0.8rem;cursor:pointer;" onclick="navigateTo('login')">لديك حساب؟ <span style="color:var(--accent);">سجل الدخول</span></p>
             </div>
         </div>
-        <!-- الشاشة الرئيسية -->
         <div id="screen-main" class="screen">
             <div class="header">
                 <span class="brand">🏗️ رابش الجميل</span>
@@ -941,50 +1081,40 @@
                 <button class="nav-item" data-page="settings" onclick="switchTab('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 1-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 1-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>الإعدادات</button>
             </nav>
         </div>
-        <!-- لوحة الإدارة -->
         <div id="screen-admin" class="screen">
             <div class="header"><span class="brand">👑 لوحة المطور</span><button class="btn btn-sm btn-outline" onclick="navigateTo('login')" style="width:auto;">خروج</button></div>
             <div class="content" id="admin-content"><div class="empty"><div class="empty-icon">⏳</div><p>جاري تحميل لوحة التحكم...</p></div></div>
         </div>
-        <!-- الإعدادات -->
         <div id="screen-settings" class="screen">
             <div class="header"><span class="brand">⚙️ الإعدادات</span><button class="btn btn-sm btn-outline" onclick="navigateTo('main')" style="width:auto;">عودة</button></div>
             <div class="content">
                 <div class="glass" style="padding:14px;margin-bottom:10px;"><h4>🔔 الإشعارات العامة</h4><div style="display:flex;justify-content:space-between;align-items:center;"><span>تفعيل الإشعارات</span><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div></div>
                 <div class="glass" style="padding:14px;margin-bottom:10px;"><h4>🎨 المظهر</h4><div style="display:flex;justify-content:space-between;align-items:center;"><span>الوضع الليلي</span><div class="toggle-switch active" id="theme-toggle-settings" onclick="toggleTheme()"></div></div></div>
                 <div class="glass" style="padding:14px;margin-bottom:10px;"><h4>🌐 اللغة</h4><select class="form-input"><option>العربية</option><option>الإنجليزية</option></select></div>
-                <div class="glass" style="padding:14px;margin-bottom:10px;"><h4>📱 حول التطبيق</h4><p style="font-size:0.8rem;color:var(--text2);">الإصدار 2.0.0 - رابش الجميل</p><button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="showPrivacy()">📄 سياسة الخصوصية</button></div>
+                <div class="glass" style="padding:14px;margin-bottom:10px;"><h4>📱 حول التطبيق</h4><p style="font-size:0.8rem;color:var(--text2);">الإصدار 2.5.0 - رابش الجميل | منصة الروابش الذكية</p>
+                    <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="showPrivacy()">📄 سياسة الخصوصية</button>
+                    <button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showTerms()">📋 الشروط والأحكام</button>
+                    <button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showFAQ()">❓ الأسئلة الشائعة</button>
+                    <button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showAbout()">ℹ️ عن رابش الجميل</button>
+                </div>
                 <button class="btn btn-danger btn-sm" style="width:100%;" onclick="authLogout()">🚪 تسجيل الخروج</button>
             </div>
         </div>
-        <!-- النوافذ المنبثقة -->
+        <div id="screen-dashboard" class="screen">
+            <div class="header"><span class="brand">📊 لوحة التحكم</span><button class="btn btn-sm btn-outline" onclick="navigateTo('main');switchTab('home');" style="width:auto;">عودة</button></div>
+            <div class="content" id="dashboard-content"><div class="empty"><div class="empty-icon">⏳</div><p>جاري تحميل لوحة التحكم...</p></div></div>
+        </div>
         <div id="detail-modal" class="modal-overlay hidden" onclick="closeDetail()"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div id="detail-content"></div></div></div>
         <div id="chat-modal" class="modal-overlay hidden" onclick="closeChat()"><div class="modal-sheet" onclick="event.stopPropagation()"><div class="modal-handle"></div><div id="chat-content"></div></div></div>
         <div id="toast-container" class="toast-container"></div>
     </div>
-
     <script>
-        // =================== فايربيس ====================
-        const firebaseConfig = {
-            apiKey: "AIzaSyDDZRKtXllhjajB9eBCLQ0Ym18eBYg-XAw",
-            authDomain: "beautiful-rabsh.firebaseapp.com",
-            databaseURL: "https://beautiful-rabsh-default-rtdb.firebaseio.com",
-            projectId: "beautiful-rabsh",
-            storageBucket: "beautiful-rabsh.firebasestorage.app",
-            messagingSenderId: "638751481857",
-            appId: "1:638751481857:web:1d41c05ec9d1d6325d6000"
-        };
+        const firebaseConfig = { apiKey: "AIzaSyDDZRKtXllhjajB9eBCLQ0Ym18eBYg-XAw", authDomain: "beautiful-rabsh.firebaseapp.com", databaseURL: "https://beautiful-rabsh-default-rtdb.firebaseio.com", projectId: "beautiful-rabsh", storageBucket: "beautiful-rabsh.firebasestorage.app", messagingSenderId: "638751481857", appId: "1:638751481857:web:1d41c05ec9d1d6325d6000" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
         let fbConnected = false;
-        db.ref('.info/connected').on('value', snap => {
-            fbConnected = snap.val() === true;
-            const bar = document.getElementById('connection-bar');
-            if (bar) bar.style.display = fbConnected ? 'none' : 'block';
-        });
-
-        // ==================== الحالة العامة ====================
+        db.ref('.info/connected').on('value', snap => { fbConnected = snap.val() === true; const bar = document.getElementById('connection-bar'); if (bar) bar.style.display = fbConnected ? 'none' :
+                'block'; });
         let currentUser = null;
         let currentPage = 'home';
         let activeCat = 'الكل';
@@ -998,1255 +1128,599 @@
         let lastFetch = 0;
         let renderLock = false;
         const CATS = ['الكل', 'بطاريات', 'مكائن', 'جنوط', 'أبواب', 'نحاس', 'حديد', 'إلكترونيات', 'قطع غيار', 'متنوع'];
+        const CAR_BRANDS = ['تويوتا', 'هيونداي', 'كيا', 'نيسان', 'شيفروليه', 'فورد', 'مرسيدس', 'بي إم دبليو', 'أودي', 'فولكس فاجن', 'ميتسوبيشي', 'سوزوكي', 'رينو', 'بيجو', 'سيتروين', 'فيات', 'أخرى'];
 
-        // ==================== التنقل (تم إصلاحه بالكامل) ====================
         function navigateTo(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById('screen-' + id);
             if (target) target.classList.add('active');
             if (id === 'admin') refreshAdmin();
-            if (id === 'login') {
-                currentUser = null;
+            if (id === 'dashboard') refreshDashboard();
+            if (id === 'login') { currentUser = null;
                 localStorage.removeItem('rabash_user_final3');
                 postsCache = [];
-                lastFetch = 0;
-            }
+                lastFetch = 0; }
         }
 
         function switchTab(page) {
-            if (!fbConnected && page !== 'settings' && page !== 'profile') {
-                showToast('لا يوجد اتصال بالسيرفر', 'error');
-                return;
-            }
-
-            // معالجة خاصة لصفحة الإعدادات
-            if (page === 'settings') {
-                navigateTo('settings');
-                return;
-            }
-
-            // التبويبات التي تتطلب الشاشة الرئيسية
+            if (!fbConnected && page !== 'settings' && page !== 'profile' && page !== 'dashboard') { showToast(
+                    'لا يوجد اتصال بالسيرفر', 'error'); return; }
+            if (page === 'settings') { navigateTo('settings'); return; }
+            if (page === 'dashboard') { if (!currentUser || currentUser.accountType !== 'store') { showToast(
+                        'لوحة التحكم مخصصة للتجار فقط', 'error'); return; }
+                navigateTo('dashboard'); return; }
             if (['home', 'stores', 'add', 'profile', 'notifications', 'support'].includes(page)) {
-                // التحقق من الصلاحية للنشر
-                if (page === 'add') {
-                    if (!currentUser) {
-                        showToast('يجب تسجيل الدخول أولاً', 'error');
-                        navigateTo('login');
-                        return;
-                    }
-                    if (!currentUser.approved) {
-                        showToast('حسابك قيد المراجعة', 'error');
-                        return;
-                    }
-                }
-
-                // تعيين الصفحة الحالية
+                if (page === 'add') { if (!currentUser) { showToast('يجب تسجيل الدخول أولاً', 'error');
+                        navigateTo('login'); return; } if (!currentUser.approved) { showToast(
+                            'حسابك قيد المراجعة', 'error'); return; } }
                 currentPage = page;
-
-                // تنشيط الشاشة الرئيسية
                 navigateTo('main');
-
-                // تحديث المحتوى
                 renderPage();
-
-                // تحديث شريط التنقل السفلي
                 document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 const btn = document.querySelector(`.nav-item[data-page="${page}"]`);
                 if (btn) btn.classList.add('active');
-
-                // تمرير إلى الأعلى
                 const mc = document.getElementById('main-content');
                 if (mc) mc.scrollTop = 0;
-
-                // تحديث الرصيد
-                if (currentUser && (page === 'home' || page === 'profile')) {
-                    updateCredits();
-                }
+                if (currentUser && (page === 'home' || page === 'profile')) { updateCredits(); }
             }
         }
 
-        function toggleRegType() {
-            const section = document.getElementById('reg-store-section');
-            if (section) {
-                section.style.display = document.getElementById('reg-account-type')?.value === 'store' ? 'block' :
-                'none';
-            }
-        }
+        function toggleRegType() { const section = document.getElementById('reg-store-section'); if (section) { section.style
+                .display = document.getElementById('reg-account-type')?.value === 'store' ? 'block' : 'none'; } }
 
-        function toggleTheme() {
-            isDarkMode = !isDarkMode;
-            if (isDarkMode) {
-                document.body.classList.remove('light-mode');
-            } else {
-                document.body.classList.add('light-mode');
-            }
-            const themeToggle = document.getElementById('theme-toggle-settings');
-            if (themeToggle) {
-                if (isDarkMode) themeToggle.classList.add('active');
-                else themeToggle.classList.remove('active');
-            }
-            localStorage.setItem('rabash_theme', isDarkMode ? 'dark' : 'light');
-        }
+        function toggleTheme() { isDarkMode = !isDarkMode; if (isDarkMode) { document.body.classList.remove('light-mode'); } else { document
+                .body.classList.add('light-mode'); } const themeToggle = document.getElementById('theme-toggle-settings'); if (
+                themeToggle) { if (isDarkMode) themeToggle.classList.add('active');
+            else themeToggle.classList.remove('active'); }
+            localStorage.setItem('rabash_theme', isDarkMode ? 'dark' : 'light'); }
 
-        function showToast(msg, type = '') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-            const toast = document.createElement('div');
+        function showToast(msg, type = '') { const container = document.getElementById('toast-container'); if (!container)
+            return; const toast = document.createElement('div');
             toast.className = 'toast ' + type;
             toast.innerHTML =
-                `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : '🔔'}</span> ${sanitizeHTML(msg)}`;
+                `<span>${type==='success'?'✅':type==='error'?'❌':'🔔'}</span> ${sanitizeHTML(msg)}`;
             container.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'toastOut 0.3s ease forwards';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
+            setTimeout(() => { toast.style.animation = 'toastOut 0.3s ease forwards';
+                setTimeout(() => toast.remove(), 300); }, 2500); }
 
-        function sanitizeHTML(str) {
-            const div = document.createElement('div');
-            div.textContent = str || '';
-            return div.innerHTML;
-        }
+        function sanitizeHTML(str) { const div = document.createElement('div');
+            div.textContent = str || ''; return div.innerHTML; }
 
-        function validatePhone(phone) {
-            return /^09[0-9]{8}$/.test(phone);
-        }
+        function validatePhone(phone) { return /^09[0-9]{8}$/.test(phone); }
 
-        function validatePassword(pass) {
-            return pass && pass.length >= 4;
-        }
-
-        // ==================== المصادقة ====================
-        async function authLogin() {
-            if (!fbConnected) { showToast('لا يوجد اتصال', 'error'); return; }
-            const btn = document.getElementById('login-btn');
-            if (btn) btn.disabled = true;
-            try {
-                const phone = document.getElementById('login-phone')?.value.trim();
-                const pass = document.getElementById('login-pass')?.value.trim();
-                if (!phone || !pass) { showToast('املأ جميع الحقول', 'error'); return; }
-                if (!validatePhone(phone)) { showToast('رقم هاتف غير صالح', 'error'); return; }
-                const snap = await db.ref('users').orderByChild('phone').equalTo(phone).once('value');
-                if (!snap.exists()) { showToast('الحساب غير موجود', 'error'); return; }
+        function validatePassword(pass) { return pass && pass.length >= 4; }
+        async function authLogin() { if (!fbConnected) { showToast('لا يوجد اتصال', 'error'); return; } const btn = document
+                .getElementById('login-btn'); if (btn) btn.disabled = true; try { const phone = document.getElementById(
+                    'login-phone')?.value.trim(); const pass = document.getElementById('login-pass')?.value.trim(); if (!phone ||
+                    !pass) { showToast('املأ جميع الحقول', 'error'); return; } if (!validatePhone(phone)) { showToast(
+                        'رقم هاتف غير صالح', 'error'); return; } const snap = await db.ref('users').orderByChild('phone')
+                    .equalTo(phone).once('value'); if (!snap.exists()) { showToast('الحساب غير موجود', 'error'); return; }
                 let user = null;
-                snap.forEach(c => { const u = c.val(); if (u.password === pass) user = { id: c.key, ...u }; });
-                if (!user) { showToast('كلمة المرور خاطئة', 'error'); return; }
-                if (!user.approved) { showToast('الحساب قيد المراجعة', 'error'); return; }
-                if (user.banned) { showToast('تم حظر حسابك', 'error'); return; }
+                snap.forEach(c => { const u = c.val(); if (u.password === pass) user = { id: c.key, ...u }; }); if (!user) {
+                    showToast('كلمة المرور خاطئة', 'error'); return; } if (!user.approved) { showToast('الحساب قيد المراجعة',
+                        'error'); return; } if (user.banned) { showToast('تم حظر حسابك', 'error'); return; }
                 currentUser = user;
                 localStorage.setItem('rabash_user_final3', JSON.stringify(user));
                 switchTab('home');
                 showToast(`مرحباً ${user.username}`, 'success');
-                updateCredits();
-            } catch (e) {
-                showToast('خطأ في الاتصال', 'error');
-                console.error(e);
-            } finally { if (btn) btn.disabled = false; }
-        }
-
-        async function authRegister() {
-            if (!fbConnected) { showToast('لا يوجد اتصال', 'error'); return; }
-            const btn = document.getElementById('reg-btn');
-            if (btn) btn.disabled = true;
-            try {
-                const name = document.getElementById('reg-name')?.value.trim();
-                const phone = document.getElementById('reg-phone')?.value.trim();
-                const pass = document.getElementById('reg-pass')?.value.trim();
-                const type = document.getElementById('reg-account-type')?.value;
-                if (!name || !phone || !pass) { showToast('املأ جميع الحقول', 'error'); return; }
-                if (!validatePhone(phone)) { showToast('رقم هاتف غير صالح (09xxxxxxxx)', 'error'); return; }
-                if (!validatePassword(pass)) { showToast('كلمة المرور قصيرة (4 أحرف على الأقل)', 'error'); return; }
-                const check = await db.ref('users').orderByChild('phone').equalTo(phone).once('value');
-                if (check.exists()) { showToast('الرقم مسجل مسبقاً', 'error'); return; }
-                if (type === 'user') {
-                    await db.ref('users').push({
-                        username: name,
-                        phone,
-                        password: pass,
-                        accountType: 'user',
-                        approved: true,
-                        banned: false,
-                        credits: 0,
-                        createdAt: Date.now(),
-                        profileImage: '',
-                        bio: ''
-                    });
+                updateCredits(); } catch (e) { showToast('خطأ في الاتصال', 'error');
+                console.error(e); } finally { if (btn) btn.disabled = false; } }
+        async function authRegister() { if (!fbConnected) { showToast('لا يوجد اتصال', 'error'); return; } const btn = document
+                .getElementById('reg-btn'); if (btn) btn.disabled = true; try { const name = document.getElementById(
+                    'reg-name')?.value.trim(); const phone = document.getElementById('reg-phone')?.value.trim();
+                const pass = document.getElementById('reg-pass')?.value.trim(); const type = document.getElementById(
+                    'reg-account-type')?.value; if (!name || !phone || !pass) { showToast('املأ جميع الحقول', 'error'); return; }
+                if (!validatePhone(phone)) { showToast('رقم هاتف غير صالح (09xxxxxxxx)', 'error'); return; } if (!
+                    validatePassword(pass)) { showToast('كلمة المرور قصيرة (4 أحرف على الأقل)', 'error'); return; } const check =
+                    await db.ref('users').orderByChild('phone').equalTo(phone).once('value'); if (check.exists()) { showToast(
+                        'الرقم مسجل مسبقاً', 'error'); return; } if (type === 'user') { await db.ref('users').push({ username: name,
+                        phone, password: pass, accountType: 'user', approved: true, banned: false, credits: 0,
+                        createdAt: Date.now(), profileImage: '', bio: '' });
                     showToast('تم إنشاء الحساب!', 'success');
-                    navigateTo('login');
-                } else {
-                    const provider = document.getElementById('reg-provider')?.value;
-                    const transfer = document.getElementById('reg-transfer')?.value.trim();
-                    if (!transfer) { showToast('اكتب رقم التحويل', 'error'); return; }
-                    await db.ref('registrationRequests').push({
-                        username: name,
-                        phone,
-                        password: pass,
-                        accountType: 'store',
-                        provider,
-                        transferPhone: transfer,
-                        status: 'pending',
-                        createdAt: Date.now()
-                    });
+                    navigateTo('login'); } else { const provider = document.getElementById('reg-provider')?.value; const transfer =
+                        document.getElementById('reg-transfer')?.value.trim(); if (!transfer) { showToast('اكتب رقم التحويل',
+                            'error'); return; } await db.ref('registrationRequests').push({ username: name, phone, password: pass,
+                        accountType: 'store', provider, transferPhone: transfer, status: 'pending', createdAt: Date
+                        .now() });
                     showToast('تم إرسال الطلب للمراجعة', 'success');
-                    navigateTo('login');
-                }
-            } catch (e) {
-                showToast('خطأ', 'error');
-                console.error(e);
-            } finally { if (btn) btn.disabled = false; }
-        }
+                    navigateTo('login'); } } catch (e) { showToast('خطأ', 'error');
+                console.error(e); } finally { if (btn) btn.disabled = false; } }
 
-        function authLogout() {
-            currentUser = null;
+        function authLogout() { currentUser = null;
             localStorage.removeItem('rabash_user_final3');
             postsCache = [];
             lastFetch = 0;
             navigateTo('login');
-            showToast('تم تسجيل الخروج');
-        }
+            showToast('تم تسجيل الخروج'); }
 
-        function promptAdminCode() {
-            const code = prompt('رمز المطور:');
-            if (code === '2026') navigateTo('admin');
-            else if (code) showToast('رمز خاطئ', 'error');
-        }
-
-        // ==================== المشرف ====================
-        async function refreshAdmin() {
-            const c = document.getElementById('admin-content');
-            if (!c) return;
-            c.innerHTML = '<div class="empty"><div class="empty-icon">⏳</div><p>جاري التحميل...</p></div>';
-            try {
-                const [reqS, usrS, postS, storeS, suppS] = await Promise.all([
-                    db.ref('registrationRequests').once('value').catch(() => ({ exists: () => false,
-                        forEach: () => {} })),
-                    db.ref('users').once('value').catch(() => ({ exists: () => false, forEach: () => {} })),
-                    db.ref('posts').once('value').catch(() => ({ exists: () => false, forEach: () => {} })),
-                    db.ref('stores').once('value').catch(() => ({ exists: () => false, forEach: () => {} })),
-                    db.ref('support_chats').once('value').catch(() => ({ exists: () => false,
-                        forEach: () => {} }))
-                ]);
-                let rc = 0,
+        function promptAdminCode() { const code = prompt('رمز المطور:'); if (code === '2026') navigateTo('admin');
+            else if (code) showToast('رمز خاطئ', 'error'); }
+        async function refreshAdmin() { const c = document.getElementById('admin-content'); if (!c) return;
+            c.innerHTML =
+                '<div class="empty"><div class="empty-icon">⏳</div><p>جاري التحميل...</p></div>'; try { const [reqS, usrS,
+                    postS, storeS, suppS
+                ] = await Promise.all([db.ref('registrationRequests').once('value').catch(() => ({ exists: () => false,
+                    forEach: () => {} })), db.ref('users').once('value').catch(() => ({ exists: () => false,
+                    forEach: () => {} })), db.ref('posts').once('value').catch(() => ({ exists: () => false,
+                    forEach: () => {} })), db.ref('stores').once('value').catch(() => ({ exists: () => false,
+                    forEach: () => {} })), db.ref('support_chats').once('value').catch(() => ({ exists: () => false,
+                    forEach: () => {} }))
+                ]); let rc = 0,
                     uc = 0,
                     pc = 0,
                     sc = 0;
                 reqS.forEach(() => rc++);
                 usrS.forEach(() => uc++);
                 postS.forEach(() => pc++);
-                storeS.forEach(() => sc++);
-
-                let h = `
-                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
-                    <div class="admin-stat-item"><div class="value">${rc}</div><div class="label">طلبات</div></div>
-                    <div class="admin-stat-item"><div class="value">${uc}</div><div class="label">مستخدمين</div></div>
-                    <div class="admin-stat-item"><div class="value">${pc}</div><div class="label">إعلانات</div></div>
-                    <div class="admin-stat-item"><div class="value">${sc}</div><div class="label">متاجر</div></div>
-                </div>
-                <div class="glass" style="padding:12px;margin-bottom:10px;">
-                    <h4>📢 إشعار عام</h4>
-                    <textarea id="adm-notif" class="form-input" rows="2" placeholder="نص الإشعار..."></textarea>
-                    <button class="btn btn-sm btn-primary" style="margin-top:6px;" onclick="sendAdminNotif()">📤 إرسال للجميع</button>
-                </div>
-                <div class="glass" style="padding:12px;margin-bottom:10px;">
-                    <h4>🪙 منح عملات</h4>
-                    <input id="adm-uid" class="form-input" placeholder="معرف المستخدم">
-                    <input id="adm-amt" class="form-input" type="number" placeholder="عدد العملات" style="margin:6px 0;">
-                    <button class="btn btn-sm btn-blue" onclick="grantCredits()">منح</button>
-                </div>
-                <div class="section-title">📥 طلبات التفعيل</div>`;
-
+                storeS.forEach(() => sc++); let h =
+                    `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;"><div class="admin-stat-item"><div class="value">${rc}</div><div class="label">طلبات</div></div><div class="admin-stat-item"><div class="value">${uc}</div><div class="label">مستخدمين</div></div><div class="admin-stat-item"><div class="value">${pc}</div><div class="label">إعلانات</div></div><div class="admin-stat-item"><div class="value">${sc}</div><div class="label">متاجر</div></div></div><div class="glass" style="padding:12px;margin-bottom:10px;"><h4>📢 إشعار عام</h4><textarea id="adm-notif" class="form-input" rows="2" placeholder="نص الإشعار..."></textarea><button class="btn btn-sm btn-primary" style="margin-top:6px;" onclick="sendAdminNotif()">📤 إرسال للجميع</button></div><div class="glass" style="padding:12px;margin-bottom:10px;"><h4>🪙 منح عملات</h4><input id="adm-uid" class="form-input" placeholder="معرف المستخدم"><input id="adm-amt" class="form-input" type="number" placeholder="عدد العملات" style="margin:6px 0;"><button class="btn btn-sm btn-blue" onclick="grantCredits()">منح</button></div><div class="section-title">📥 طلبات التفعيل</div>`;
                 let hasReqs = false;
-                reqS.forEach(ch => {
-                    hasReqs = true;
-                    const r = ch.val();
-                    h += `
-                    <div class="glass" style="padding:8px;margin:4px 0;font-size:0.8rem;">
-                        <strong>${sanitizeHTML(r.username)}</strong> (${r.accountType}) - ${sanitizeHTML(r.phone)}
-                        <br>التحويل: ${sanitizeHTML(r.transferPhone||'')}
-                        <br>
-                        <button class="btn btn-xs btn-success" onclick="approveReq('${ch.key}')">✅ قبول</button>
-                        <button class="btn btn-xs btn-danger" onclick="rejectReq('${ch.key}')">❌ رفض</button>
-                    </div>`;
-                });
-                if (!hasReqs) h +=
+                reqS.forEach(ch => { hasReqs = true; const r = ch.val();
+                    h +=
+                        `<div class="glass" style="padding:8px;margin:4px 0;font-size:0.8rem;"><strong>${sanitizeHTML(r.username)}</strong> (${r.accountType}) - ${sanitizeHTML(r.phone)}<br>التحويل: ${sanitizeHTML(r.transferPhone||'')}<br><button class="btn btn-xs btn-success" onclick="approveReq('${ch.key}')">✅ قبول</button> <button class="btn btn-xs btn-danger" onclick="rejectReq('${ch.key}')">❌ رفض</button></div>`;
+                }); if (!hasReqs) h +=
                     '<p style="font-size:0.8rem;color:var(--text3);padding:8px;">لا توجد طلبات معلقة</p>';
-
                 h += '<div class="section-title">👥 المستخدمون</div>';
-                usrS.forEach(ch => {
-                    const u = ch.val();
-                    const isStore = u.accountType === 'store';
-                    h += `
-                    <div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
-                        <span>${sanitizeHTML(u.username)} <span class="account-type-tag ${isStore?'store':'user'}">${isStore?'🏪 تاجر':'👤 مستخدم'}</span> 🪙${u.credits||0} ${u.banned?'🚫محظور':''}</span>
-                        <span>
-                            <button class="btn btn-xs btn-blue" onclick="toggleBan('${ch.key}',${!u.banned})">${u.banned?'✅ فك الحظر':'🚫 حظر'}</button>
-                            <button class="btn btn-xs btn-danger" onclick="delUser('${ch.key}')">🗑</button>
-                        </span>
-                    </div>`;
+                usrS.forEach(ch => { const u = ch.val(); const isStore = u.accountType === 'store';
+                    h +=
+                        `<div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;"><span>${sanitizeHTML(u.username)} <span class="account-type-tag ${isStore?'store':'user'}">${isStore?'🏪 تاجر':'👤 مستخدم'}</span> 🪙${u.credits||0} ${u.banned?'🚫محظور':''}</span><span><button class="btn btn-xs btn-blue" onclick="toggleBan('${ch.key}',${!u.banned})">${u.banned?'✅ فك الحظر':'🚫 حظر'}</button> <button class="btn btn-xs btn-danger" onclick="delUser('${ch.key}')">🗑</button></span></div>`;
                 });
-
                 h += '<div class="section-title">🏬 المتاجر</div>';
-                storeS.forEach(ch => {
-                    const s = ch.val();
-                    h += `
-                    <div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;">
-                        <span>${sanitizeHTML(s.name)} ${s.pinned?'📌':''}</span>
-                        <span>
-                            <button class="btn btn-xs btn-blue" onclick="togglePin('${ch.key}',${!s.pinned})">${s.pinned?'إلغاء التثبيت':'📌 تثبيت'}</button>
-                            <button class="btn btn-xs btn-danger" onclick="delStore('${ch.key}')">🗑</button>
-                        </span>
-                    </div>`;
+                storeS.forEach(ch => { const s = ch.val();
+                    h +=
+                        `<div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;"><span>${sanitizeHTML(s.name)} ${s.pinned?'📌':''}</span><span><button class="btn btn-xs btn-blue" onclick="togglePin('${ch.key}',${!s.pinned})">${s.pinned?'إلغاء التثبيت':'📌 تثبيت'}</button> <button class="btn btn-xs btn-danger" onclick="delStore('${ch.key}')">🗑</button></span></div>`;
                 });
-
                 h += '<div class="section-title">📦 الإعلانات</div>';
-                postS.forEach(ch => {
-                    const p = ch.val();
-                    h += `
-                    <div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;">
-                        <span>${sanitizeHTML(p.title||'بدون عنوان')} 👁${p.views||0}</span>
-                        <span>
-                            <button class="btn btn-xs btn-blue" onclick="togglePinPost('${ch.key}',${!p.pinned})">${p.pinned?'📌 مفعل':'📌 تثبيت'}</button>
-                            <button class="btn btn-xs btn-danger" onclick="delPost('${ch.key}')">🗑</button>
-                        </span>
-                    </div>`;
+                postS.forEach(ch => { const p = ch.val();
+                    h +=
+                        `<div class="glass" style="padding:6px;margin:3px 0;font-size:0.75rem;display:flex;justify-content:space-between;align-items:center;"><span>${sanitizeHTML(p.title||'بدون عنوان')} 👁${p.views||0}</span><span><button class="btn btn-xs btn-blue" onclick="togglePinPost('${ch.key}',${!p.pinned})">${p.pinned?'📌 مفعل':'📌 تثبيت'}</button> <button class="btn btn-xs btn-danger" onclick="delPost('${ch.key}')">🗑</button></span></div>`;
                 });
-
                 h += '<div class="section-title">💬 رسائل الدعم</div>';
                 let hasSupp = false;
-                suppS.forEach(ch => {
-                    hasSupp = true;
-                    const m = ch.val();
-                    h += `
-                    <div class="glass" style="padding:8px;margin:4px 0;font-size:0.75rem;">
-                        <strong>${sanitizeHTML(m.senderName||'')}:</strong> ${sanitizeHTML(m.text||'')}
-                        <button class="btn btn-xs btn-blue" onclick="replySupport('${m.userId}')">رد</button>
-                    </div>`;
-                });
-                if (!hasSupp) h += '<p style="font-size:0.8rem;color:var(--text3);padding:8px;">لا توجد رسائل</p>';
-
-                c.innerHTML = h;
-            } catch (e) {
-                c.innerHTML = '<div class="empty"><div class="empty-icon">❌</div><p>خطأ في تحميل اللوحة</p></div>';
-                console.error(e);
-            }
-        }
-
-        async function approveReq(id) {
-            try {
-                const s = await db.ref('registrationRequests/' + id).once('value');
-                const r = s.val();
-                if (!r) return;
-                await db.ref('users').push({
-                    username: r.username,
-                    phone: r.phone,
-                    password: r.password,
-                    accountType: r.accountType || 'store',
-                    approved: true,
-                    banned: false,
-                    credits: 0,
-                    createdAt: Date.now(),
-                    profileImage: '',
-                    bio: ''
-                });
-                await db.ref('registrationRequests/' + id).remove();
-                showToast('تم القبول', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e);
-                showToast('خطأ', 'error'); }
-        }
-
-        async function rejectReq(id) {
-            try {
-                await db.ref('registrationRequests/' + id).remove();
-                showToast('تم الرفض');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function grantCredits() {
-            try {
-                const uid = document.getElementById('adm-uid')?.value.trim();
-                const amt = +document.getElementById('adm-amt')?.value || 0;
-                if (!uid || amt <= 0) { showToast('بيانات مفقودة', 'error'); return; }
-                const snap = await db.ref('users/' + uid).once('value');
-                if (!snap.exists()) { showToast('المستخدم غير موجود', 'error'); return; }
-                const cur = snap.val().credits || 0;
-                await db.ref('users/' + uid + '/credits').set(cur + amt);
-                showToast('تم المنح', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function togglePin(sid, pin) {
-            try {
-                await db.ref('stores/' + sid + '/pinned').set(pin);
-                showToast(pin ? 'تم التثبيت' : 'تم إلغاء التثبيت', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function togglePinPost(pid, pin) {
-            try {
-                await db.ref('posts/' + pid + '/pinned').set(pin);
+                suppS.forEach(ch => { hasSupp = true; const m = ch.val();
+                    h +=
+                        `<div class="glass" style="padding:8px;margin:4px 0;font-size:0.75rem;"><strong>${sanitizeHTML(m.senderName||'')}:</strong> ${sanitizeHTML(m.text||'')} <button class="btn btn-xs btn-blue" onclick="replySupport('${m.userId}')">رد</button></div>`;
+                }); if (!hasSupp) h += '<p style="font-size:0.8rem;color:var(--text3);padding:8px;">لا توجد رسائل</p>';
+                c.innerHTML = h; } catch (e) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">❌</div><p>خطأ في تحميل اللوحة</p></div>';
+            console.error(e); } }
+        async function approveReq(id) { try { const s = await db.ref('registrationRequests/' + id).once('value'); const r = s
+                .val(); if (!r) return; await db.ref('users').push({ username: r.username, phone: r.phone, password: r
+                    .password, accountType: r.accountType || 'store', approved: true, banned: false, credits: 0,
+                createdAt: Date.now(), profileImage: '', bio: '' }); await db.ref('registrationRequests/' + id).remove();
+            showToast('تم القبول', 'success');
+            refreshAdmin(); } catch (e) { console.error(e);
+            showToast('خطأ', 'error'); } }
+        async function rejectReq(id) { try { await db.ref('registrationRequests/' + id).remove();
+            showToast('تم الرفض');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function grantCredits() { try { const uid = document.getElementById('adm-uid')?.value.trim(); const amt = +document
+                .getElementById('adm-amt')?.value || 0; if (!uid || amt <= 0) { showToast('بيانات مفقودة', 'error'); return; }
+                const snap = await db.ref('users/' + uid).once('value'); if (!snap.exists()) { showToast('المستخدم غير موجود',
+                    'error'); return; } const cur = snap.val().credits || 0; await db.ref('users/' + uid + '/credits').set(
+                    cur + amt);
+            showToast('تم المنح', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function togglePin(sid, pin) { try { await db.ref('stores/' + sid + '/pinned').set(pin);
+            showToast(pin ? 'تم التثبيت' : 'تم إلغاء التثبيت', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function togglePinPost(pid, pin) { try { await db.ref('posts/' + pid + '/pinned').set(pin);
+            postsCache = [];
+            lastFetch = 0;
+            showToast(pin ? 'تم تثبيت الإعلان' : 'تم إلغاء التثبيت', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function toggleBan(uid, ban) { try { await db.ref('users/' + uid + '/banned').set(ban);
+            showToast(ban ? 'تم الحظر' : 'تم فك الحظر', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function delUser(uid) { if (confirm('تأكيد حذف المستخدم؟')) { try { await db.ref('users/' + uid).remove();
+                showToast('تم الحذف', 'success');
+                refreshAdmin(); } catch (e) { console.error(e); } } }
+        async function delStore(sid) { if (confirm('تأكيد حذف المتجر؟')) { try { await db.ref('stores/' + sid).remove();
+                showToast('تم الحذف', 'success');
+                refreshAdmin(); } catch (e) { console.error(e); } } }
+        async function delPost(pid) { if (confirm('تأكيد حذف الإعلان؟')) { try { await db.ref('posts/' + pid).remove();
                 postsCache = [];
                 lastFetch = 0;
-                showToast(pin ? 'تم تثبيت الإعلان' : 'تم إلغاء التثبيت', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function toggleBan(uid, ban) {
-            try {
-                await db.ref('users/' + uid + '/banned').set(ban);
-                showToast(ban ? 'تم الحظر' : 'تم فك الحظر', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function delUser(uid) {
-            if (confirm('تأكيد حذف المستخدم؟')) {
-                try {
-                    await db.ref('users/' + uid).remove();
-                    showToast('تم الحذف', 'success');
-                    refreshAdmin();
-                } catch (e) { console.error(e); }
-            }
-        }
-
-        async function delStore(sid) {
-            if (confirm('تأكيد حذف المتجر؟')) {
-                try {
-                    await db.ref('stores/' + sid).remove();
-                    showToast('تم الحذف', 'success');
-                    refreshAdmin();
-                } catch (e) { console.error(e); }
-            }
-        }
-
-        async function delPost(pid) {
-            if (confirm('تأكيد حذف الإعلان؟')) {
-                try {
-                    await db.ref('posts/' + pid).remove();
-                    postsCache = [];
-                    lastFetch = 0;
-                    showToast('تم الحذف', 'success');
-                    refreshAdmin();
-                } catch (e) { console.error(e); }
-            }
-        }
-
-        async function sendAdminNotif() {
-            const t = document.getElementById('adm-notif')?.value.trim();
-            if (!t) return;
-            try {
-                await db.ref('admin_notifications').push({ text: t, createdAt: Date.now() });
-                showToast('تم الإرسال', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        async function replySupport(uid) {
-            const txt = prompt('نص الرد:');
-            if (!txt) return;
-            try {
-                await db.ref('support_chats').push({
-                    userId: uid,
-                    senderName: 'الإدارة',
-                    senderId: 'admin',
-                    text: txt,
-                    createdAt: Date.now()
-                });
-                await db.ref('user_notifications/' + uid).push({
-                    text: '📩 رد من الإدارة: ' + txt,
-                    createdAt: Date.now()
-                });
-                showToast('تم الرد', 'success');
-                refreshAdmin();
-            } catch (e) { console.error(e); }
-        }
-
-        // ==================== محرك العرض ====================
-        function renderPage() {
-            if (renderLock) return;
-            renderLock = true;
-            const c = document.getElementById('main-content');
-            if (!c) { renderLock = false; return; }
-            try {
-                if (currentPage === 'home') renderHome(c);
-                else if (currentPage === 'stores') renderStores(c);
-                else if (currentPage === 'add') renderAdd(c);
-                else if (currentPage === 'profile') renderProfile(c);
-                else if (currentPage === 'notifications') renderNotifs(c);
-                else if (currentPage === 'support') renderSupport(c);
-            } catch (e) {
-                console.error(e);
+                showToast('تم الحذف', 'success');
+                refreshAdmin(); } catch (e) { console.error(e); } } }
+        async function sendAdminNotif() { const t = document.getElementById('adm-notif')?.value.trim(); if (!t) return; try { await db
+                .ref('admin_notifications').push({ text: t, createdAt: Date.now() });
+            showToast('تم الإرسال', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function replySupport(uid) { const txt = prompt('نص الرد:'); if (!txt) return; try { await db.ref(
+                'support_chats').push({ userId: uid, senderName: 'الإدارة', senderId: 'admin', text: txt, createdAt: Date
+                .now() }); await db.ref('user_notifications/' + uid).push({ text: '📩 رد من الإدارة: ' + txt,
+            createdAt: Date.now() });
+            showToast('تم الرد', 'success');
+            refreshAdmin(); } catch (e) { console.error(e); } }
+        async function refreshDashboard() { const c = document.getElementById('dashboard-content'); if (!c || !currentUser ||
+                currentUser.accountType !== 'store') return;
+            c.innerHTML =
+                '<div class="empty"><div class="empty-icon">⏳</div><p>جاري تحميل لوحة التحكم...</p></div>'; try { const [
+                    storeSnap, postsSnap, ratingsSnap
+                ] = await Promise.all([db.ref('stores').orderByChild('ownerId').equalTo(currentUser.id).once(
+                    'value'), db.ref('posts').orderByChild('userId').equalTo(currentUser.id).once(
+                    'value'), db.ref('store_ratings').once('value')]); let storeId = null,
+                    storeName = '',
+                    totalViews = 0,
+                    postCount = 0,
+                    totalRating = 0,
+                    ratingCount = 0;
+                storeSnap.forEach(ch => { storeId = ch.key;
+                    storeName = ch.val().name; });
+                let posts = [];
+                postsSnap.forEach(ch => { const p = ch.val(); if (!p.deleted) { posts.push({ id: ch.key, ...p });
+                        totalViews += (p.views || 0);
+                        postCount++; } });
+                posts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+                ratingsSnap.forEach(ch => { const r = ch.val(); if (r.storeId === storeId) { totalRating += r.stars;
+                        ratingCount++; } }); const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(
+                    1) : '0.0';
                 c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">⚠️</div><p>حدث خطأ في تحميل الصفحة</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'home\')">🔄 العودة للرئيسية</button></div>';
-            } finally { renderLock = false; }
-        }
+                    `<div class="hero-banner"><h2 style="color:var(--accent);">📊 ${sanitizeHTML(storeName||'متجري')}</h2><p style="color:var(--text2);">لوحة تحكم التاجر</p></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;"><div class="admin-stat-item"><div class="value">${postCount}</div><div class="label">إعلانات</div></div><div class="admin-stat-item"><div class="value">${totalViews}</div><div class="label">مشاهدات</div></div><div class="admin-stat-item"><div class="value">⭐${avgRating}</div><div class="label">تقييم</div></div></div><div class="dashboard-card"><h4>⚡ إجراءات سريعة</h4><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;"><button class="btn btn-sm btn-primary" onclick="closeDetail();switchTab('add');">➕ إضافة إعلان</button><button class="btn btn-sm btn-outline" onclick="navigateTo('main');switchTab('stores');">🏪 متجري</button></div></div><div class="section-title">📦 أحدث إعلاناتي</div>` + posts.slice(0, 10).map(p => `
+                <div class="card" onclick="closeDetail();openPost('${p.id}')" style="margin:4px 0;">
+                <div style="display:flex;align-items:center;gap:10px;padding:8px;">
+                <div style="width:50px;height:50px;border-radius:8px;background:var(--input);flex-shrink:0;overflow:hidden;">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`:'📦'}</div>
+                <div style="flex:1;"><strong>${sanitizeHTML(p.title)}</strong><br><small>💰${p.price}د.ل | 👁${p.views||0}</small></div>
+                </div></div>`).join('') + (posts.length === 0 ?
+                    '<p style="color:var(--text3);text-align:center;">لا توجد إعلانات بعد</p>' : '') +
+                    `<button class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;" onclick="navigateTo('main');switchTab('home');">🔙 العودة للرئيسية</button>`;
+            } catch (e) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">❌</div><p>خطأ في تحميل لوحة التحكم</p></div>';
+            console.error(e); } }
 
-        async function renderHome(c) {
-            const now = Date.now();
-            if (postsCache.length && (now - lastFetch) < 5000) { displayPosts(c, postsCache); return; }
+        function renderPage() { if (renderLock) return;
+            renderLock = true; const c = document.getElementById('main-content'); if (!c) { renderLock = false; return; } try { if (
+                    currentPage === 'home') renderHome(c); else if (currentPage === 'stores') renderStores(c); else if (
+                    currentPage === 'add') renderAdd(c); else if (currentPage === 'profile') renderProfile(c); else if (
+                    currentPage === 'notifications') renderNotifs(c); else if (currentPage === 'support') renderSupport(
+                c); } catch (e) { console.error(e);
+                c.innerHTML =
+                    '<div class="empty"><div class="empty-icon">⚠️</div><p>حدث خطأ في تحميل الصفحة</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'home\')">🔄 العودة للرئيسية</button></div>'; }
+            finally { renderLock = false; } }
+        async function renderHome(c) { const now = Date.now(); if (postsCache.length && (now - lastFetch) < 5000) { displayPosts(
+                    c, postsCache); return; }
             c.innerHTML =
                 '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div><div class="skeleton" style="height:120px;margin-bottom:10px;border-radius:var(--radius2);"></div>';
-            try {
-                const [pS, nS] = await Promise.all([
-                    db.ref('posts').once('value'),
-                    db.ref('admin_notifications').limitToLast(1).once('value')
-                ]);
-                let ann = '';
-                nS.forEach(ch => {
-                    ann =
-                        `<div class="glass" style="padding:10px;margin-bottom:10px;border-right:3px solid var(--accent);font-size:0.8rem;">📢 ${sanitizeHTML(ch.val().text)}</div>`;
-                });
+            try { const [pS, nS] = await Promise.all([db.ref('posts').once('value'), db.ref('admin_notifications')
+                    .limitToLast(1).once('value')
+                ]); let ann = '';
+                nS.forEach(ch => { ann =
+                        `<div class="glass" style="padding:10px;margin-bottom:10px;border-right:3px solid var(--accent);font-size:0.8rem;">📢 ${sanitizeHTML(ch.val().text)}</div>`; });
                 postsCache = [];
                 pS.forEach(ch => postsCache.push({ id: ch.key, ...ch.val() }));
                 lastFetch = Date.now();
-                displayPosts(c, postsCache, ann);
-            } catch (e) {
-                if (!postsCache.length) c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'home\')">🔄 إعادة المحاولة</button></div>';
-            }
-        }
+                displayPosts(c, postsCache, ann); } catch (e) { if (!postsCache.length) c.innerHTML =
+                    '<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'home\')">🔄 إعادة المحاولة</button></div>'; } }
 
-        function displayPosts(c, posts, ann = '') {
-            let filtered = [...posts].filter(p => !p.deleted);
-            if (activeCat !== 'الكل') filtered = filtered.filter(p => p.category === activeCat);
-            if (searchQ) filtered = filtered.filter(p => (p.title || '').includes(searchQ) || (p.description || '')
-                .includes(searchQ));
-
-            if (sortBy === 'newest') filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-            else if (sortBy === 'views') filtered.sort((a, b) => (b.views || 0) - (a.views || 0));
-            else if (sortBy === 'price_low') filtered.sort((a, b) => (a.price || 0) - (b.price || 0));
-            else if (sortBy === 'price_high') filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
-            else if (sortBy === 'pinned') filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b
-                .createdAt || 0) - (a.createdAt || 0));
-
-            const pinned = filtered.filter(p => p.pinned);
-            const unpinned = filtered.filter(p => !p.pinned);
-            const sorted = [...pinned, ...unpinned];
-
-            c.innerHTML = (ann || '') + `
-            <input class="form-input" placeholder="🔍 بحث في الإعلانات..." value="${sanitizeHTML(searchQ)}" oninput="setFilter('search',this.value)" style="border-radius:30px;margin-bottom:8px;">
-            <div class="chip-row">${CATS.map(x=>`<span class="chip${x===activeCat?' active':''}" onclick="setFilter('cat','${x}')">${x}</span>`).join('')}</div>
-            <div class="sort-row">
-                <span class="chip${sortBy==='newest'?' active':''}" onclick="setSort('newest')">🕐 الأحدث</span>
-                <span class="chip${sortBy==='views'?' active':''}" onclick="setSort('views')">👁 الأكثر مشاهدة</span>
-                <span class="chip${sortBy==='price_low'?' active':''}" onclick="setSort('price_low')">💰 السعر: منخفض</span>
-                <span class="chip${sortBy==='price_high'?' active':''}" onclick="setSort('price_high')">💰 السعر: مرتفع</span>
-                <span class="chip${sortBy==='pinned'?' active':''}" onclick="setSort('pinned')">📌 المثبتة</span>
-            </div>` +
-                sorted.map(p => {
-                    const isPinned = p.pinned ? '📌 ' : '';
-                    const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]');
-                    const isFav = favs.includes(p.id);
-                    return `
+        function displayPosts(c, posts, ann = '') { let filtered = [...posts].filter(p => !p.deleted); if (activeCat !== 'الكل')
+                filtered = filtered.filter(p => p.category === activeCat); if (searchQ) filtered = filtered.filter(p => (p
+                    .title || '').includes(searchQ) || (p.description || '').includes(searchQ) || (p.carBrand || '')
+                .includes(searchQ)); if (sortBy === 'newest') filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            else if (sortBy === 'views') filtered.sort((a, b) => (b.views || 0) - (a.views || 0)); else if (sortBy ===
+                'price_low') filtered.sort((a, b) => (a.price || 0) - (b.price || 0)); else if (sortBy === 'price_high')
+                filtered.sort((a, b) => (b.price || 0) - (a.price || 0)); else if (sortBy === 'pinned') filtered.sort((a,
+            b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0)); const pinned = filtered
+                .filter(p => p.pinned); const unpinned = filtered.filter(p => !p.pinned); const sorted = [...pinned, ...
+                    unpinned
+                ];
+            c.innerHTML = (ann || '') +
+                `<div class="hero-banner"><h2 style="color:var(--accent);font-size:1.1rem;">🔍 ابحث عن قطع الغيار وقطع السيارات</h2><p style="color:var(--text2);font-size:0.78rem;">أسرع طريقة للوصول للرابش المناسب</p></div><input class="form-input" placeholder="🔍 بحث عن قطعة، نوع سيارة، رقم رابش..." value="${sanitizeHTML(searchQ)}" oninput="setFilter('search',this.value)" style="border-radius:30px;margin-bottom:8px;border:2px solid var(--accent);box-shadow:0 0 10px rgba(255,107,26,0.15);"><div class="chip-row">${CATS.map(x=>`<span class="chip${x===activeCat?' active':''}" onclick="setFilter('cat','${x}')">${x}</span>`).join('')}</div><div class="chip-row" style="margin-bottom:6px;">${CAR_BRANDS.slice(0,8).map(b=>`<span class="chip${searchQ===b?' active':''}" onclick="setFilter('search','${b}')" style="font-size:0.68rem;">🚘 ${b}</span>`).join('')}</div><div class="sort-row"><span class="chip${sortBy==='newest'?' active':''}" onclick="setSort('newest')">🕐 الأحدث</span><span class="chip${sortBy==='views'?' active':''}" onclick="setSort('views')">👁 الأكثر مشاهدة</span><span class="chip${sortBy==='price_low'?' active':''}" onclick="setSort('price_low')">💰 الأقل سعراً</span><span class="chip${sortBy==='price_high'?' active':''}" onclick="setSort('price_high')">💰 الأعلى سعراً</span><span class="chip${sortBy==='pinned'?' active':''}" onclick="setSort('pinned')">📌 المثبتة</span></div>` +
+                sorted.map(p => { const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]'); const isFav = favs
+                        .includes(p.id); return `
                 <div class="card" onclick="openPost('${p.id}')">
-                    <div class="card-img">
-                        ${p.image?`<img src="${p.image}" loading="lazy" alt="">`:'📦'}
-                        <div class="card-gradient"></div>
-                        <span class="card-badge">${sanitizeHTML(p.category||'')}</span>
-                        ${p.price?`<span class="card-price">💰 ${p.price} د.ل</span>`:''}
-                        ${p.pinned?`<span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.6rem;z-index:3;">مثبت</span>`:''}
-                        <span class="card-fav" onclick="event.stopPropagation();toggleFav('${p.id}')">${isFav?'❤️':'🤍'}</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>${sanitizeHTML(p.title)}</h3>
-                        <div class="meta">
-                            <span>🏬 ${sanitizeHTML(p.storeName||'')}</span>
-                            <span>📍 الجمال</span>
-                            <span>👁 ${p.views||0}</span>
-                        </div>
-                    </div>
-                </div>`;
-                }).join('') +
-                (sorted.length === 0 ?
+                <div class="card-img">${p.image?`<img src="${p.image}" loading="lazy" alt="">`:'📦'}<div class="card-gradient"></div><span class="card-badge">${sanitizeHTML(p.category||'')}</span>${p.price?`<span class="card-price">💰 ${p.price} د.ل</span>`:''}${p.pinned?`<span style="position:absolute;top:10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:2px 8px;border-radius:10px;font-size:0.6rem;z-index:3;">📌 مثبت</span>`:''}<span class="card-fav" onclick="event.stopPropagation();toggleFav('${p.id}')">${isFav?'❤️':'🤍'}</span></div>
+                <div class="card-body"><h3>${sanitizeHTML(p.title)}</h3><div class="meta"><span>🏬 ${sanitizeHTML(p.storeName||'')}</span><span>📍 الجمال</span><span>👁 ${p.views||0}</span>${p.carBrand?`<span>🚘 ${sanitizeHTML(p.carBrand)}</span>`:''}</div></div></div>`; }).join('') + (sorted.length === 0 ?
                     '<div class="empty"><div class="empty-icon">📭</div><p>لا توجد إعلانات مطابقة</p><button class="btn btn-outline btn-sm" onclick="activeCat=\'الكل\';searchQ=\'\';sortBy=\'newest\';renderPage();">🔄 عرض الكل</button></div>' :
-                    '');
-        }
+                    ''); }
 
-        function setFilter(k, v) {
-            if (k === 'cat') activeCat = v;
+        function setFilter(k, v) { if (k === 'cat') activeCat = v;
             else if (k === 'search') searchQ = v;
-            renderPage();
-        }
+            renderPage(); }
 
-        function setSort(s) {
-            sortBy = s;
-            renderPage();
-        }
+        function setSort(s) { sortBy = s;
+            renderPage(); }
 
-        function toggleFav(pid) {
-            if (!currentUser) { showToast('سجل الدخول للحفظ', 'error'); return; }
-            const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]');
-            const idx = favs.indexOf(pid);
-            if (idx > -1) {
-                favs.splice(idx, 1);
-                showToast('تمت إزالة من المفضلة');
-            } else {
-                favs.push(pid);
-                showToast('تمت الإضافة للمفضلة ❤️');
-            }
+        function toggleFav(pid) { if (!currentUser) { showToast('سجل الدخول للحفظ', 'error'); return; } const favs = JSON.parse(
+                localStorage.getItem('rabash_favs') || '[]'); const idx = favs.indexOf(pid); if (idx > -1) { favs.splice(idx,
+                1);
+            showToast('تمت إزالة من المفضلة'); } else { favs.push(pid);
+            showToast('تمت الإضافة للمفضلة ❤️'); }
             localStorage.setItem('rabash_favs', JSON.stringify(favs));
-            renderPage();
-        }
-
+            renderPage(); }
         async function renderStores(c) {
             c.innerHTML =
                 '<div class="skeleton" style="height:70px;margin:8px 0;"></div><div class="skeleton" style="height:70px;margin:8px 0;"></div>';
-            try {
-                const snap = await db.ref('stores').once('value');
-                const stores = [];
+            try { const snap = await db.ref('stores').once('value'); const stores = [];
                 snap.forEach(ch => stores.push({ id: ch.key, ...ch.val() }));
                 stores.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.avgRating || 0) - (a.avgRating || 0));
-                let h = '<div class="section-title">🏪 المتاجر في الجميل</div>';
-                if (stores.length === 0) h +=
+                let h = '<div class="section-title">🏪 المتاجر في الجميل</div>'; if (stores.length === 0) h +=
                     '<div class="empty"><div class="empty-icon">🏪</div><p>لا توجد متاجر بعد</p></div>';
-                else stores.forEach(s => {
-                    h += `
-                    <div class="store-row" onclick="openStore('${s.id}')">
-                        <div class="store-avatar">${s.logo?`<img src="${s.logo}" alt="">`:'🏪'}</div>
-                        <div style="flex:1;">
-                            <strong>${s.pinned?'📌 ':''}${sanitizeHTML(s.name)}</strong>
-                            <br><small>⭐ ${(s.avgRating||0).toFixed(1)} | ${sanitizeHTML(s.city||'الجمال')}</small>
-                        </div>
-                    </div>`;
-                });
+                else stores.forEach(s => { h += `
+                <div class="store-row" onclick="openStore('${s.id}')">
+                <div class="store-avatar">${s.logo?`<img src="${s.logo}" alt="">`:'🏪'}</div>
+                <div style="flex:1;"><strong>${s.pinned?'📌 ':''}${sanitizeHTML(s.name)}</strong><br><small>⭐ ${(s.avgRating||0).toFixed(1)} | ${sanitizeHTML(s.city||'الجمال')}</small></div>
+                </div>`; });
                 h +=
                     '<button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="openCreateStoreModal()">➕ إنشاء متجر جديد</button>';
-                c.innerHTML = h;
-            } catch (e) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">⚠️</div><p>خطأ في تحميل المتاجر</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'stores\')">🔄 إعادة المحاولة</button></div>';
-            }
-        }
+                c.innerHTML = h; } catch (e) { c.innerHTML =
+                    '<div class="empty"><div class="empty-icon">⚠️</div><p>خطأ في تحميل المتاجر</p><button class="btn btn-outline btn-sm" onclick="switchTab(\'stores\')">🔄 إعادة المحاولة</button></div>'; } }
 
-        function openCreateStoreModal() {
-            if (!currentUser) { showToast('يجب تسجيل الدخول أولاً', 'error');
-                navigateTo('login'); return; }
-            if (currentUser.accountType !== 'store') { showToast('حسابك ليس حساب متجر. يجب التسجيل كمتجر أولاً.',
-                'error'); return; }
-            const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-content');
-            if (!modal || !content) return;
+        function openCreateStoreModal() { if (!currentUser) { showToast('يجب تسجيل الدخول أولاً', 'error');
+            navigateTo('login'); return; } if (currentUser.accountType !== 'store') { showToast(
+                'حسابك ليس حساب متجر. يجب التسجيل كمتجر أولاً.', 'error'); return; } const modal = document.getElementById(
+                'detail-modal'); const content = document.getElementById('detail-content'); if (!modal || !content)
+        return;
             modal.classList.remove('hidden');
-            content.innerHTML = `
-            <h3 style="color:var(--accent);">🏪 إنشاء متجر جديد</h3>
-            <div class="form-group"><label>اسم المتجر *</label><input class="form-input" id="shop-name" placeholder="اسم متجرك"></div>
-            <div class="form-group"><label>وصف المتجر</label><textarea class="form-input" id="shop-desc" rows="3" placeholder="اكتب وصفاً لمتجرك..."></textarea></div>
-            <div class="form-group"><label>المدينة</label><input class="form-input" id="shop-city" value="الجمال" placeholder="المدينة"></div>
-            <div class="form-group">
-                <label>شعار المتجر (اختياري)</label>
-                <input type="file" id="shop-logo-file" accept="image/*" onchange="previewShopLogo()" style="display:none;">
-                <button class="btn btn-outline btn-sm" onclick="document.getElementById('shop-logo-file').click()">📸 اختر شعاراً</button>
-                <div id="shop-logo-preview" style="margin-top:8px;"></div>
-            </div>
-            <button class="btn btn-primary" onclick="submitCreateStore()">✅ إنشاء المتجر</button>
-            <button class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
-            shopLogoData = null;
-            const preview = document.getElementById('shop-logo-preview');
-            if (preview) preview.innerHTML = '';
-        }
+            content.innerHTML =
+                `<h3 style="color:var(--accent);">🏪 إنشاء متجر جديد</h3><div class="form-group"><label>اسم المتجر *</label><input class="form-input" id="shop-name" placeholder="اسم متجرك"></div><div class="form-group"><label>وصف المتجر</label><textarea class="form-input" id="shop-desc" rows="3" placeholder="اكتب وصفاً لمتجرك..."></textarea></div><div class="form-group"><label>المدينة</label><input class="form-input" id="shop-city" value="الجمال" placeholder="المدينة"></div><div class="form-group"><label>شعار المتجر (اختياري)</label><input type="file" id="shop-logo-file" accept="image/*" onchange="previewShopLogo()" style="display:none;"><button class="btn btn-outline btn-sm" onclick="document.getElementById('shop-logo-file').click()">📸 اختر شعاراً</button><div id="shop-logo-preview" style="margin-top:8px;"></div></div><button class="btn btn-primary" onclick="submitCreateStore()">✅ إنشاء المتجر</button><button class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
+            shopLogoData = null; const preview = document.getElementById('shop-logo-preview'); if (preview) preview.innerHTML =
+                ''; }
 
-        function previewShopLogo() {
-            const file = document.getElementById('shop-logo-file')?.files[0];
-            if (!file) return;
-            if (file.size > 2 * 1024 * 1024) { showToast('حجم الصورة كبير جداً (الحد الأقصى 2 ميجابايت)', 'error'); return; }
-            const reader = new FileReader();
-            reader.onload = e => {
-                shopLogoData = e.target.result;
-                const preview = document.getElementById('shop-logo-preview');
-                if (preview) preview.innerHTML =
-                    `<img src="${shopLogoData}" style="width:80px;height:80px;border-radius:12px;object-fit:cover;">`;
-            };
-            reader.readAsDataURL(file);
-        }
+        function previewShopLogo() { const file = document.getElementById('shop-logo-file')?.files[0]; if (!file) return; if (file
+                .size > 2 * 1024 * 1024) { showToast('حجم الصورة كبير جداً (الحد الأقصى 2 ميجابايت)', 'error'); return; } const
+            reader = new FileReader();
+            reader.onload = e => { shopLogoData = e.target.result; const preview = document.getElementById(
+                    'shop-logo-preview'); if (preview) preview.innerHTML =
+                    `<img src="${shopLogoData}" style="width:80px;height:80px;border-radius:12px;object-fit:cover;">`; };
+            reader.readAsDataURL(file); }
+        async function submitCreateStore() { const name = document.getElementById('shop-name')?.value.trim(); const desc = document
+                .getElementById('shop-desc')?.value.trim(); const city = document.getElementById('shop-city')?.value.trim() ||
+                'الجمال'; if (!name) { showToast('ادخل اسم المتجر', 'error'); return; } try { const exist = await db.ref(
+                    'stores').orderByChild('ownerId').equalTo(currentUser.id).once('value'); if (exist.exists()) { showToast(
+                    'لديك متجر بالفعل', 'error'); return; } await db.ref('stores').push({ name, description: desc || '',
+                city, ownerId: currentUser.id, ownerName: currentUser.username, logo: shopLogoData || '', pinned: false,
+                avgRating: 0, ratingCount: 0, createdAt: Date.now() });
+            showToast('تم إنشاء المتجر بنجاح!', 'success');
+            closeDetail();
+            switchTab('stores'); } catch (e) { showToast('خطأ في إنشاء المتجر', 'error');
+            console.error(e); } }
 
-        async function submitCreateStore() {
-            const name = document.getElementById('shop-name')?.value.trim();
-            const desc = document.getElementById('shop-desc')?.value.trim();
-            const city = document.getElementById('shop-city')?.value.trim() || 'الجمال';
-            if (!name) { showToast('ادخل اسم المتجر', 'error'); return; }
-            try {
-                const exist = await db.ref('stores').orderByChild('ownerId').equalTo(currentUser.id).once('value');
-                if (exist.exists()) { showToast('لديك متجر بالفعل', 'error'); return; }
-                await db.ref('stores').push({
-                    name,
-                    description: desc || '',
-                    city,
-                    ownerId: currentUser.id,
-                    ownerName: currentUser.username,
-                    logo: shopLogoData || '',
-                    pinned: false,
-                    avgRating: 0,
-                    ratingCount: 0,
-                    createdAt: Date.now()
-                });
-                showToast('تم إنشاء المتجر بنجاح!', 'success');
-                closeDetail();
-                switchTab('stores');
-            } catch (e) { showToast('خطأ في إنشاء المتجر', 'error');
-                console.error(e); }
-        }
+        function renderAdd(c) { if (!currentUser) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">🔒</div><p>يجب تسجيل الدخول لنشر إعلان</p><button class="btn btn-primary btn-sm" onclick="navigateTo(\'login\')">تسجيل الدخول</button></div>'; return; } if (
+                !currentUser.approved) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">⏳</div><p>حسابك قيد المراجعة</p></div>'; return; }
+            c.innerHTML =
+                `<h3 style="color:var(--accent);margin-bottom:10px;">➕ إضافة إعلان جديد</h3><div class="form-group"><label>العنوان *</label><input class="form-input" id="ptitle" placeholder="عنوان الإعلان"></div><div class="form-group"><label>التصنيف</label><select class="form-input" id="pcat">${CATS.filter(x=>x!=='الكل').map(x=>`<option>${x}</option>`).join('')}</select></div><div class="form-group"><label>نوع السيارة</label><select class="form-input" id="pcar"><option value="">-- اختر نوع السيارة --</option>${CAR_BRANDS.map(b=>`<option>${b}</option>`).join('')}</select></div><div class="form-group"><label>حالة القطعة</label><select class="form-input" id="pcondition"><option>مستعملة</option><option>جديدة</option><option>ممتازة</option><option>تحتاج صيانة</option></select></div><div class="form-group"><label>السعر (د.ل)</label><input class="form-input" type="number" id="pprice" value="0" min="0"></div><div class="form-group"><label>الوصف *</label><textarea class="form-input" id="pdesc" rows="3" placeholder="وصف الإعلان"></textarea></div><div class="form-group"><label>رقم الاتصال</label><input class="form-input" id="pphone" value="${currentUser.phone}" dir="ltr"></div><div class="form-group"><label>صورة الإعلان</label><input type="file" id="pimgfile" accept="image/*" onchange="previewImg()" style="display:none;"><button class="btn btn-outline btn-sm" onclick="document.getElementById('pimgfile').click()">📸 اختر صورة</button></div><div id="pimgprev" style="margin-bottom:8px;"></div><button class="btn btn-primary" id="add-post-btn" onclick="addPost()">🚀 نشر الإعلان</button>`;
+            selImg = null; const prev = document.getElementById('pimgprev'); if (prev) prev.innerHTML = ''; }
 
-        function renderAdd(c) {
-            if (!currentUser) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">🔒</div><p>يجب تسجيل الدخول لنشر إعلان</p><button class="btn btn-primary btn-sm" onclick="navigateTo(\'login\')">تسجيل الدخول</button></div>';
-                return;
-            }
-            if (!currentUser.approved) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">⏳</div><p>حسابك قيد المراجعة</p></div>';
-                return;
-            }
-            c.innerHTML = `
-            <h3 style="color:var(--accent);margin-bottom:10px;">➕ إضافة إعلان جديد</h3>
-            <div class="form-group"><label>العنوان *</label><input class="form-input" id="ptitle" placeholder="عنوان الإعلان"></div>
-            <div class="form-group"><label>التصنيف</label><select class="form-input" id="pcat">${CATS.filter(x=>x!=='الكل').map(x=>`<option>${x}</option>`).join('')}</select></div>
-            <div class="form-group"><label>السعر (د.ل)</label><input class="form-input" type="number" id="pprice" value="0" min="0"></div>
-            <div class="form-group"><label>الوصف *</label><textarea class="form-input" id="pdesc" rows="3" placeholder="وصف الإعلان"></textarea></div>
-            <div class="form-group"><label>رقم الاتصال</label><input class="form-input" id="pphone" value="${currentUser.phone}" dir="ltr"></div>
-            <div class="form-group"><label>صورة الإعلان</label><input type="file" id="pimgfile" accept="image/*" onchange="previewImg()" style="display:none;"><button class="btn btn-outline btn-sm" onclick="document.getElementById('pimgfile').click()">📸 اختر صورة</button></div>
-            <div id="pimgprev" style="margin-bottom:8px;"></div>
-            <button class="btn btn-primary" id="add-post-btn" onclick="addPost()">🚀 نشر الإعلان</button>`;
-            selImg = null;
-            const prev = document.getElementById('pimgprev');
-            if (prev) prev.innerHTML = '';
-        }
-
-        function previewImg() {
-            const f = document.getElementById('pimgfile')?.files[0];
-            if (!f) return;
-            if (f.size > 3 * 1024 * 1024) { showToast('حجم الصورة كبير جداً (الحد الأقصى 3 ميجابايت)', 'error'); return; }
-            const r = new FileReader();
-            r.onload = e => {
-                selImg = e.target.result;
-                const p = document.getElementById('pimgprev');
-                if (p) p.innerHTML =
-                    `<img src="${selImg}" style="max-width:100%;max-height:160px;border-radius:12px;">`;
-            };
-            r.readAsDataURL(f);
-        }
-
-        async function addPost() {
-            if (!currentUser || !currentUser.approved) { showToast('حسابك غير مفعل', 'error'); return; }
-            const btn = document.getElementById('add-post-btn');
-            if (btn) btn.disabled = true;
-            const t = document.getElementById('ptitle')?.value.trim();
-            const cat = document.getElementById('pcat')?.value;
-            const pr = +document.getElementById('pprice')?.value || 0;
-            const d = document.getElementById('pdesc')?.value.trim();
-            const ph = document.getElementById('pphone')?.value.trim();
-            if (!t || !d || !ph) { showToast('املأ جميع الحقول المطلوبة', 'error'); if (btn) btn.disabled = false; return; }
-            if (!validatePhone(ph)) { showToast('رقم هاتف غير صالح', 'error'); if (btn) btn.disabled = false; return; }
-            try {
-                let sn = currentUser.username,
-                    sid = null;
-                const ss = await db.ref('stores').orderByChild('ownerId').equalTo(currentUser.id).once('value');
+        function previewImg() { const f = document.getElementById('pimgfile')?.files[0]; if (!f) return; if (f.size > 3 * 1024 *
+                1024) { showToast('حجم الصورة كبير جداً (الحد الأقصى 3 ميجابايت)', 'error'); return; } const r = new FileReader();
+            r.onload = e => { selImg = e.target.result; const p = document.getElementById('pimgprev'); if (p) p.innerHTML =
+                    `<img src="${selImg}" style="max-width:100%;max-height:160px;border-radius:12px;">`; };
+            r.readAsDataURL(f); }
+        async function addPost() { if (!currentUser || !currentUser.approved) { showToast('حسابك غير مفعل', 'error'); return; }
+            const btn = document.getElementById('add-post-btn'); if (btn) btn.disabled = true; const t = document.getElementById(
+                'ptitle')?.value.trim(); const cat = document.getElementById('pcat')?.value; const pr = +document.getElementById(
+                'pprice')?.value || 0; const d = document.getElementById('pdesc')?.value.trim(); const ph = document
+                .getElementById('pphone')?.value.trim(); const carBrand = document.getElementById('pcar')?.value || '';
+            const condition = document.getElementById('pcondition')?.value || 'مستعملة'; if (!t || !d || !ph) { showToast(
+                'املأ جميع الحقول المطلوبة', 'error'); if (btn) btn.disabled = false; return; } if (!validatePhone(ph)) {
+                showToast('رقم هاتف غير صالح', 'error'); if (btn) btn.disabled = false; return; } try { let sn = currentUser
+                    .username,
+                    sid = null; const ss = await db.ref('stores').orderByChild('ownerId').equalTo(currentUser.id).once(
+                    'value');
                 ss.forEach(ch => { sn = ch.val().name;
-                    sid = ch.key; });
-                await db.ref('posts').push({
-                    title: t,
-                    category: cat,
-                    city: 'الجمال',
-                    price: pr,
-                    description: d,
-                    phone: ph,
-                    image: selImg || '',
-                    userId: currentUser.id,
-                    ownerName: currentUser.username,
-                    storeName: sn,
-                    storeId: sid,
-                    views: 0,
-                    pinned: false,
-                    deleted: false,
-                    createdAt: Date.now()
-                });
+                    sid = ch.key; }); await db.ref('posts').push({ title: t, category: cat, city: 'الجمال', price: pr,
+                    description: d, phone: ph, image: selImg || '', userId: currentUser.id, ownerName: currentUser
+                        .username,
+                    storeName: sn, storeId: sid, carBrand, condition, views: 0, pinned: false, deleted: false,
+                    createdAt: Date.now() });
                 selImg = null;
                 postsCache = [];
                 lastFetch = 0;
                 showToast('تم نشر الإعلان بنجاح!', 'success');
-                switchTab('home');
-            } catch (e) { showToast('خطأ في النشر', 'error');
-                console.error(e); } finally { if (btn) btn.disabled = false; }
-        }
-
-        async function openPost(pid) {
-            try {
-                const snap = await db.ref('posts/' + pid).once('value');
-                const p = snap.val();
-                if (!p || p.deleted) { showToast('الإعلان غير متوفر', 'error'); return; }
-                await db.ref('posts/' + pid + '/views').set((p.views || 0) + 1);
-                postsCache = [];
-                lastFetch = 0;
-                const modal = document.getElementById('detail-modal');
-                const content = document.getElementById('detail-content');
-                if (!modal || !content) return;
-                modal.classList.remove('hidden');
-                const isOwner = currentUser && currentUser.id === p.userId;
-                const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]');
-                const isFav = favs.includes(pid);
-                content.innerHTML = `
-                ${p.image?`<img src="${p.image}" style="width:100%;max-height:240px;object-fit:cover;border-radius:16px;margin-bottom:10px;" alt="">`:'<div style="font-size:4rem;text-align:center;">📦</div>'}
-                <h2 style="color:var(--accent);">${sanitizeHTML(p.title)}</h2>
-                ${p.pinned?'<span style="background:var(--accent);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.7rem;">📌 إعلان مثبت</span>':''}
-                <p style="font-weight:700;font-size:1.1rem;">💰 ${p.price} د.ل</p>
-                <p style="color:var(--text2);">${sanitizeHTML(p.description)}</p>
-                <p>📍 ${sanitizeHTML(p.city||'الجمال')} | 🏷 ${sanitizeHTML(p.category)}</p>
-                <p>🏬 ${sanitizeHTML(p.storeName)} | 👤 ${sanitizeHTML(p.ownerName)} | 👁 ${(p.views||0)+1} مشاهدة</p>
-                <button class="btn btn-primary" onclick="window.open('tel:${sanitizeHTML(p.phone)}')">📞 اتصال: ${sanitizeHTML(p.phone)}</button>
-                <div style="margin-top:8px;display:flex;gap:6px;">
-                    <button class="btn btn-outline btn-sm" style="flex:1;" onclick="toggleFav('${pid}');closeDetail();">${isFav?'❤️':'🤍'} حفظ</button>
-                    ${p.storeId?`<button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeDetail();openStore('${p.storeId}')">🏪 المتجر</button>`:''}
-                    ${isOwner?`<button class="btn btn-danger btn-sm" style="flex:1;" onclick="deleteMyPost('${pid}')">🗑 حذف</button>`:''}
-                </div>
-                <div style="margin-top:10px;">
-                    <h4>💬 التعليقات</h4>
-                    <div id="post-comments-${pid}" style="max-height:200px;overflow-y:auto;"><p style="color:var(--text3);">جاري التحميل...</p></div>
-                    <div style="display:flex;gap:6px;margin-top:6px;">
-                        <input id="comment-input-${pid}" class="form-input" placeholder="اكتب تعليقاً..." style="flex:1;">
-                        <button class="btn btn-sm btn-primary" onclick="addComment('${pid}')">إرسال</button>
-                    </div>
-                </div>
-                <button class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
-                loadComments(pid);
-            } catch (e) { console.error(e);
-                showToast('خطأ في تحميل الإعلان', 'error'); }
-        }
-
-        async function loadComments(pid) {
-            try {
-                const snap = await db.ref('post_comments/' + pid).limitToLast(30).once('value');
-                const comments = [];
-                snap.forEach(ch => comments.push({ id: ch.key, ...ch.val() }));
-                comments.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-                const container = document.getElementById('post-comments-' + pid);
-                if (!container) return;
-                container.innerHTML = comments.length === 0 ?
-                    '<p style="color:var(--text3);">لا توجد تعليقات بعد</p>' :
-                    comments.map(c => `
-                    <div class="comment-card">
-                        <strong>${sanitizeHTML(c.userName||'')}</strong>
-                        <span style="font-size:0.65rem;color:var(--text3);">${new Date(c.createdAt||0).toLocaleDateString('ar')}</span>
-                        <p>${sanitizeHTML(c.text||'')}</p>
-                        ${currentUser&&currentUser.id===c.userId?`<button class="btn btn-xs btn-danger" onclick="deleteComment('${pid}','${c.id}')">🗑</button>`:''}
-                    </div>`).join('');
-            } catch (e) { console.error(e); }
-        }
-
-        async function addComment(pid) {
-            if (!currentUser) { showToast('سجل الدخول للتعليق', 'error'); return; }
-            const input = document.getElementById('comment-input-' + pid);
-            const txt = input?.value.trim();
-            if (!txt) return;
-            if (txt.length < 2) { showToast('التعليق قصير جداً', 'error'); return; }
-            try {
-                await db.ref('post_comments/' + pid).push({
-                    userId: currentUser.id,
-                    userName: currentUser.username,
-                    text: txt,
-                    createdAt: Date.now()
-                });
-                if (input) input.value = '';
-                loadComments(pid);
-                showToast('تم إضافة التعليق', 'success');
-            } catch (e) { console.error(e);
-                showToast('خطأ', 'error'); }
-        }
-
-        async function deleteComment(pid, cid) {
-            if (!confirm('حذف التعليق؟')) return;
-            try {
-                await db.ref('post_comments/' + pid + '/' + cid).remove();
-                loadComments(pid);
-                showToast('تم الحذف');
-            } catch (e) { console.error(e); }
-        }
-
-        async function deleteMyPost(pid) {
-            if (!confirm('تأكيد حذف الإعلان؟')) return;
-            try {
-                await db.ref('posts/' + pid + '/deleted').set(true);
-                postsCache = [];
-                lastFetch = 0;
-                closeDetail();
-                showToast('تم حذف الإعلان', 'success');
-                renderPage();
-            } catch (e) { console.error(e); }
-        }
+                switchTab('home'); } catch (e) { showToast('خطأ في النشر', 'error');
+                console.error(e); } finally { if (btn) btn.disabled = false; } }
+        async function openPost(pid) { try { const snap = await db.ref('posts/' + pid).once('value'); const p = snap.val(); if (
+                !p || p.deleted) { showToast('الإعلان غير متوفر', 'error'); return; } await db.ref('posts/' + pid + '/views')
+                .set((p.views || 0) + 1);
+            postsCache = [];
+            lastFetch = 0; const modal = document.getElementById('detail-modal'); const content = document.getElementById(
+                'detail-content'); if (!modal || !content) return;
+            modal.classList.remove('hidden'); const isOwner = currentUser && currentUser.id === p.userId; const favs = JSON.parse(
+                localStorage.getItem('rabash_favs') || '[]'); const isFav = favs.includes(pid);
+            content.innerHTML =
+                `${p.image?`<img src="${p.image}" style="width:100%;max-height:240px;object-fit:cover;border-radius:16px;margin-bottom:10px;" alt="">`:'<div style="font-size:4rem;text-align:center;">📦</div>'}<h2 style="color:var(--accent);">${sanitizeHTML(p.title)}</h2>${p.pinned?'<span style="background:var(--accent);color:#fff;padding:3px 10px;border-radius:12px;font-size:0.7rem;">📌 إعلان مثبت</span>':''}<p style="font-weight:700;font-size:1.1rem;">💰 ${p.price} د.ل</p>${p.carBrand?`<p>🚘 نوع السيارة: <strong>${sanitizeHTML(p.carBrand)}</strong></p>`:''}${p.condition?`<p>📋 الحالة: <strong>${sanitizeHTML(p.condition)}</strong></p>`:''}<p style="color:var(--text2);">${sanitizeHTML(p.description)}</p><p>📍 ${sanitizeHTML(p.city||'الجمال')} | 🏷 ${sanitizeHTML(p.category)}</p><p>🏬 ${sanitizeHTML(p.storeName)} | 👤 ${sanitizeHTML(p.ownerName)} | 👁 ${(p.views||0)+1} مشاهدة</p><button class="btn btn-primary" onclick="window.open('tel:${sanitizeHTML(p.phone)}')">📞 اتصال: ${sanitizeHTML(p.phone)}</button><button class="btn btn-success btn-sm" style="margin-top:4px;width:100%;" onclick="window.open('https://wa.me/218${sanitizeHTML(p.phone).replace(/^0/,'')}')">💬 واتساب</button><div style="margin-top:8px;display:flex;gap:6px;"><button class="btn btn-outline btn-sm" style="flex:1;" onclick="toggleFav('${pid}');closeDetail();">${isFav?'❤️':'🤍'} حفظ</button>${p.storeId?`<button class="btn btn-outline btn-sm" style="flex:1;" onclick="closeDetail();openStore('${p.storeId}')">🏪 المتجر</button>`:''}${isOwner?`<button class="btn btn-danger btn-sm" style="flex:1;" onclick="deleteMyPost('${pid}')">🗑 حذف</button>`:''}</div><div style="margin-top:10px;"><h4>💬 التعليقات</h4><div id="post-comments-${pid}" style="max-height:200px;overflow-y:auto;"><p style="color:var(--text3);">جاري التحميل...</p></div><div style="display:flex;gap:6px;margin-top:6px;"><input id="comment-input-${pid}" class="form-input" placeholder="اكتب تعليقاً..." style="flex:1;"><button class="btn btn-sm btn-primary" onclick="addComment('${pid}')">إرسال</button></div></div><button class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
+            loadComments(pid); } catch (e) { console.error(e);
+            showToast('خطأ في تحميل الإعلان', 'error'); } }
+        async function loadComments(pid) { try { const snap = await db.ref('post_comments/' + pid).limitToLast(30).once(
+                'value'); const comments = [];
+            snap.forEach(ch => comments.push({ id: ch.key, ...ch.val() }));
+            comments.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0)); const container = document.getElementById(
+                'post-comments-' + pid); if (!container) return;
+            container.innerHTML = comments.length === 0 ?
+                '<p style="color:var(--text3);">لا توجد تعليقات بعد</p>' :
+                comments.map(c => `
+                <div class="comment-card"><strong>${sanitizeHTML(c.userName||'')}</strong> <span style="font-size:0.65rem;color:var(--text3);">${new Date(c.createdAt||0).toLocaleDateString('ar')}</span><p>${sanitizeHTML(c.text||'')}</p>${currentUser&&currentUser.id===c.userId?`<button class="btn btn-xs btn-danger" onclick="deleteComment('${pid}','${c.id}')">🗑</button>`:''}</div>`).join(
+                    ''); } catch (e) { console.error(e); } }
+        async function addComment(pid) { if (!currentUser) { showToast('سجل الدخول للتعليق', 'error'); return; } const input =
+            document.getElementById('comment-input-' + pid); const txt = input?.value.trim(); if (!txt) return; if (txt
+                .length < 2) { showToast('التعليق قصير جداً', 'error'); return; } try { await db.ref('post_comments/' + pid)
+                .push({ userId: currentUser.id, userName: currentUser.username, text: txt, createdAt: Date.now() }); if (
+                    input) input.value = '';
+            loadComments(pid);
+            showToast('تم إضافة التعليق', 'success'); } catch (e) { console.error(e);
+            showToast('خطأ', 'error'); } }
+        async function deleteComment(pid, cid) { if (!confirm('حذف التعليق؟')) return; try { await db.ref('post_comments/' + pid +
+                '/' + cid).remove();
+            loadComments(pid);
+            showToast('تم الحذف'); } catch (e) { console.error(e); } }
+        async function deleteMyPost(pid) { if (!confirm('تأكيد حذف الإعلان؟')) return; try { await db.ref('posts/' + pid +
+                '/deleted').set(true);
+            postsCache = [];
+            lastFetch = 0;
+            closeDetail();
+            showToast('تم حذف الإعلان', 'success');
+            renderPage(); } catch (e) { console.error(e); } }
 
         function closeDetail() { document.getElementById('detail-modal')?.classList.add('hidden'); }
+        async function openStore(sid) { try { const [stSnap, rtSnap, pSnap] = await Promise.all([db.ref('stores/' + sid).once(
+                    'value'), db.ref('store_ratings/' + sid).once('value'), db.ref('posts').orderByChild(
+                    'storeId').equalTo(sid).once('value')
+            ]); const st = stSnap.val(); if (!st) { showToast('المتجر غير موجود', 'error'); return; }
+            let ratings = [];
+            rtSnap.forEach(ch => ratings.push(ch.val())); const avg = ratings.length ? ratings.reduce((a, b) => a + b.stars,
+                0) / ratings.length : 0; let storePosts = [];
+            pSnap.forEach(ch => { const p = ch.val(); if (!p.deleted) storePosts.push({ id: ch.key, ...p }); });
+            storePosts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)); const modal = document.getElementById(
+                'detail-modal'); const content = document.getElementById('detail-content'); if (!modal || !content)
+        return;
+            modal.classList.remove('hidden'); const isOwner = currentUser && currentUser.id === st.ownerId;
+            content.innerHTML =
+                `${st.logo?`<img src="${st.logo}" style="width:60px;height:60px;border-radius:50%;display:block;margin:0 auto;" alt="">`:'<div style="font-size:3rem;text-align:center;">🏪</div>'}<h2 style="text-align:center;">${st.pinned?'📌 ':''}${sanitizeHTML(st.name)}</h2><p style="text-align:center;color:var(--text2);">${sanitizeHTML(st.description||'')}</p><p style="text-align:center;">📍 ${sanitizeHTML(st.city||'الجمال')} | ⭐ ${avg.toFixed(1)} (${ratings.length} تقييم)</p><div class="section-title">📦 إعلانات المتجر (${storePosts.length})</div>${storePosts.map(p=>`<div class="card" onclick="closeDetail();openPost('${p.id}')" style="margin:4px 0;"><div style="display:flex;align-items:center;gap:10px;padding:8px;"><div style="width:60px;height:60px;border-radius:10px;background:var(--input);flex-shrink:0;overflow:hidden;">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`:'📦'}</div><div style="flex:1;"><strong>${sanitizeHTML(p.title)}</strong><br><small>💰${p.price}د.ل | 👁${p.views||0}${p.carBrand?` | 🚘${sanitizeHTML(p.carBrand)}`:''}</small></div></div></div>`).join('')||'<p style="color:var(--text3);">لا توجد إعلانات بعد</p>'}<div class="section-title">⭐ التقييمات</div>${ratings.map(r=>`<div style="background:var(--input);padding:6px;border-radius:8px;margin:3px 0;">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)} - ${sanitizeHTML(r.text)} <small>(${sanitizeHTML(r.userName)})</small></div>`).join('')||'<p style="color:var(--text3);">لا توجد تقييمات</p>'}${!isOwner?`<div style="margin-top:8px;"><select id="rstars" class="form-input" style="width:auto;display:inline;">${[5,4,3,2,1].map(i=>`<option>${i}</option>`).join('')}</select><input id="rtext" class="form-input" placeholder="تعليقك..." style="margin:4px 0;"><button class="btn btn-sm btn-primary" onclick="rateStore('${sid}')">⭐ تقييم</button></div>`:''}<button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="closeDetail();startChat('${sid}')">💬 مراسلة</button><button class="btn btn-outline btn-sm" style="margin-top:4px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
+        } catch (e) { console.error(e); } }
+        async function rateStore(sid) { if (!currentUser) { showToast('سجل الدخول للتقييم', 'error'); return; } const stars = +
+            document.getElementById('rstars')?.value; const text = document.getElementById('rtext')?.value.trim(); if (!text) {
+                showToast('اكتب تعليقاً', 'error'); return; } try { const existing = await db.ref('store_ratings/' + sid)
+                .orderByChild('userId').equalTo(currentUser.id).once('value'); if (existing.exists()) { showToast(
+                    'قمت بالتقييم مسبقاً', 'error'); return; } await db.ref('store_ratings/' + sid).push({ userId: currentUser
+                    .id, userName: currentUser.username, stars, text, storeId: sid, createdAt: Date.now() }); const
+            allRatings = await db.ref('store_ratings/' + sid).once('value'); let total = 0,
+                count = 0;
+            allRatings.forEach(ch => { total += ch.val().stars;
+                count++; }); const avg = count > 0 ? total / count : 0; await db.ref('stores/' + sid).update({ avgRating: avg,
+                ratingCount: count });
+            showToast('تم التقييم', 'success');
+            closeDetail(); } catch (e) { showToast('خطأ', 'error');
+            console.error(e); } }
 
-        async function openStore(sid) {
-            try {
-                const [stSnap, rtSnap, pSnap] = await Promise.all([
-                    db.ref('stores/' + sid).once('value'),
-                    db.ref('store_ratings/' + sid).once('value'),
-                    db.ref('posts').orderByChild('storeId').equalTo(sid).once('value')
-                ]);
-                const st = stSnap.val();
-                if (!st) { showToast('المتجر غير موجود', 'error'); return; }
-                let ratings = [];
-                rtSnap.forEach(ch => ratings.push(ch.val()));
-                const avg = ratings.length ? ratings.reduce((a, b) => a + b.stars, 0) / ratings.length : 0;
-                let storePosts = [];
-                pSnap.forEach(ch => { const p = ch.val(); if (!p.deleted) storePosts.push({ id: ch.key, ...p }); });
-                storePosts.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
-                const modal = document.getElementById('detail-modal');
-                const content = document.getElementById('detail-content');
-                if (!modal || !content) return;
-                modal.classList.remove('hidden');
-                const isOwner = currentUser && currentUser.id === st.ownerId;
-                content.innerHTML = `
-                ${st.logo?`<img src="${st.logo}" style="width:60px;height:60px;border-radius:50%;display:block;margin:0 auto;" alt="">`:'<div style="font-size:3rem;text-align:center;">🏪</div>'}
-                <h2 style="text-align:center;">${st.pinned?'📌 ':''}${sanitizeHTML(st.name)}</h2>
-                <p style="text-align:center;color:var(--text2);">${sanitizeHTML(st.description||'')}</p>
-                <p style="text-align:center;">📍 ${sanitizeHTML(st.city||'الجمال')} | ⭐ ${avg.toFixed(1)} (${ratings.length} تقييم)</p>
-                <div class="section-title">📦 إعلانات المتجر (${storePosts.length})</div>
-                ${storePosts.map(p=>`
-                <div class="card" onclick="closeDetail();openPost('${p.id}')" style="margin:4px 0;">
-                    <div style="display:flex;align-items:center;gap:10px;padding:8px;">
-                        <div style="width:60px;height:60px;border-radius:10px;background:var(--input);flex-shrink:0;overflow:hidden;">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`:'📦'}</div>
-                        <div style="flex:1;"><strong>${sanitizeHTML(p.title)}</strong><br><small>💰${p.price}د.ل | 👁${p.views||0}</small></div>
-                    </div>
-                </div>`).join('')||'<p style="color:var(--text3);">لا توجد إعلانات بعد</p>'}
-                <div class="section-title">⭐ التقييمات</div>
-                ${ratings.map(r=>`
-                <div style="background:var(--input);padding:6px;border-radius:8px;margin:3px 0;">
-                    ${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)} - ${sanitizeHTML(r.text)}
-                    <small>(${sanitizeHTML(r.userName)})</small>
-                </div>`).join('')||'<p style="color:var(--text3);">لا توجد تقييمات</p>'}
-                ${!isOwner?`
-                <div style="margin-top:8px;">
-                    <select id="rstars" class="form-input" style="width:auto;display:inline;">${[5,4,3,2,1].map(i=>`<option>${i}</option>`).join('')}</select>
-                    <input id="rtext" class="form-input" placeholder="تعليقك..." style="margin:4px 0;">
-                    <button class="btn btn-sm btn-primary" onclick="rateStore('${sid}')">⭐ تقييم</button>
-                </div>`:''}
-                <button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="closeDetail();startChat('${sid}')">💬 مراسلة</button>
-                <button class="btn btn-outline btn-sm" style="margin-top:4px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
-            } catch (e) { console.error(e); }
-        }
-
-        async function rateStore(sid) {
-            if (!currentUser) { showToast('سجل الدخول للتقييم', 'error'); return; }
-            const stars = +document.getElementById('rstars')?.value;
-            const text = document.getElementById('rtext')?.value.trim();
-            if (!text) { showToast('اكتب تعليقاً', 'error'); return; }
-            try {
-                const existing = await db.ref('store_ratings/' + sid).orderByChild('userId').equalTo(currentUser.id)
-                    .once('value');
-                if (existing.exists()) { showToast('قمت بالتقييم مسبقاً', 'error'); return; }
-                await db.ref('store_ratings/' + sid).push({
-                    userId: currentUser.id,
-                    userName: currentUser.username,
-                    stars,
-                    text,
-                    createdAt: Date.now()
-                });
-                const allRatings = await db.ref('store_ratings/' + sid).once('value');
-                let total = 0,
-                    count = 0;
-                allRatings.forEach(ch => { total += ch.val().stars;
-                    count++; });
-                const avg = count > 0 ? total / count : 0;
-                await db.ref('stores/' + sid).update({ avgRating: avg, ratingCount: count });
-                showToast('تم التقييم', 'success');
-                closeDetail();
-            } catch (e) { showToast('خطأ', 'error');
-                console.error(e); }
-        }
-
-        function startChat(sid) {
-            if (!currentUser) { showToast('سجل الدخول للمراسلة', 'error');
-                navigateTo('login'); return; }
+        function startChat(sid) { if (!currentUser) { showToast('سجل الدخول للمراسلة', 'error');
+            navigateTo('login'); return; }
             chatStoreId = sid;
             document.getElementById('chat-modal')?.classList.remove('hidden');
-            loadChat(sid);
-        }
+            loadChat(sid); }
 
-        function closeChat() {
-            document.getElementById('chat-modal')?.classList.add('hidden');
-            chatStoreId = null;
-        }
-
-        async function loadChat(sid) {
-            try {
-                const snap = await db.ref('chats/' + sid).limitToLast(30).once('value');
-                let msgs = [];
-                snap.forEach(ch => msgs.push(ch.val()));
-                const content = document.getElementById('chat-content');
-                if (!content) return;
-                content.innerHTML = `
-                <h4>💬 المحادثة</h4>
-                <div id="chatmsgs" style="max-height:45vh;overflow-y:auto;">
-                    ${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser?.id?'me':'other'}"><strong>${sanitizeHTML(m.senderName)}:</strong> ${sanitizeHTML(m.text)}</div>`).join('')}
-                </div>
-                <div style="display:flex;gap:6px;margin-top:8px;">
-                    <input id="chinput" class="form-input" placeholder="اكتب رسالة..." style="flex:1;">
-                    <button class="btn btn-sm btn-primary" onclick="sendChat('${sid}')">📤</button>
-                </div>
-                <button class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;" onclick="closeChat()">❌ إغلاق</button>`;
-                setTimeout(() => { const el = document.getElementById('chatmsgs'); if (el) el.scrollTop = el
-                    .scrollHeight; }, 100);
-            } catch (e) { console.error(e); }
-        }
-
-        async function sendChat(sid) {
-            if (!currentUser) { showToast('سجل الدخول', 'error'); return; }
-            const input = document.getElementById('chinput');
-            const txt = input?.value.trim();
-            if (!txt) return;
-            try {
-                await db.ref('chats/' + sid).push({
-                    senderId: currentUser.id,
-                    senderName: currentUser.username,
-                    text: txt,
-                    createdAt: Date.now()
-                });
-                if (input) input.value = '';
-                loadChat(sid);
-            } catch (e) { console.error(e); }
-        }
-
-        function renderNotifs(c) {
-            if (!currentUser) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">🔔</div><p>سجل الدخول لعرض الإشعارات</p></div>';
+        function closeChat() { document.getElementById('chat-modal')?.classList.add('hidden');
+            chatStoreId = null; }
+        async function loadChat(sid) { try { const snap = await db.ref('chats/' + sid).limitToLast(30).once('value');
+            let msgs = [];
+            snap.forEach(ch => msgs.push(ch.val())); const content = document.getElementById('chat-content'); if (!content)
                 return;
-            }
+            content.innerHTML =
+                `<h4>💬 المحادثة</h4><div id="chatmsgs" style="max-height:45vh;overflow-y:auto;">${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser?.id?'me':'other'}"><strong>${sanitizeHTML(m.senderName)}:</strong> ${sanitizeHTML(m.text)}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px;"><input id="chinput" class="form-input" placeholder="اكتب رسالة..." style="flex:1;"><button class="btn btn-sm btn-primary" onclick="sendChat('${sid}')">📤</button></div><button class="btn btn-outline btn-sm" style="margin-top:6px;width:100%;" onclick="closeChat()">❌ إغلاق</button>`;
+            setTimeout(() => { const el = document.getElementById('chatmsgs'); if (el) el.scrollTop = el.scrollHeight; },
+            100); } catch (e) { console.error(e); } }
+        async function sendChat(sid) { if (!currentUser) { showToast('سجل الدخول', 'error'); return; } const input = document
+                .getElementById('chinput'); const txt = input?.value.trim(); if (!txt) return; try { await db.ref('chats/' + sid)
+                .push({ senderId: currentUser.id, senderName: currentUser.username, text: txt, createdAt: Date.now() }); if (
+                    input) input.value = '';
+            loadChat(sid); } catch (e) { console.error(e); } }
+
+        function renderNotifs(c) { if (!currentUser) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">🔔</div><p>سجل الدخول لعرض الإشعارات</p></div>'; return; }
             c.innerHTML = '<div class="skeleton" style="height:60px;margin:6px 0;"></div>';
-            db.ref('user_notifications/' + currentUser.id).once('value').then(snap => {
-                let arr = [];
+            db.ref('user_notifications/' + currentUser.id).once('value').then(snap => { let arr = [];
                 snap.forEach(ch => arr.push(ch.val()));
                 arr.reverse();
                 c.innerHTML = '<div class="section-title">🔔 إشعاراتك</div>' + (arr.length === 0 ?
                     '<div class="empty"><div class="empty-icon">🔔</div><p>لا توجد إشعارات</p></div>' :
                     arr.map(n => `
-                    <div class="glass" style="padding:10px;margin:4px 0;font-size:0.82rem;">
-                        ${sanitizeHTML(n.text)}
-                        <br><small style="color:var(--text3);">${new Date(n.createdAt||0).toLocaleDateString('ar')}</small>
-                    </div>`).join(''));
-            }).catch(() => { c.innerHTML = '<div class="empty">❌ خطأ في تحميل الإشعارات</div>'; });
-        }
+                <div class="glass" style="padding:10px;margin:4px 0;font-size:0.82rem;">${sanitizeHTML(n.text)}<br><small style="color:var(--text3);">${new Date(n.createdAt||0).toLocaleDateString('ar')}</small></div>`)
+                    .join('')); }).catch(() => { c.innerHTML =
+                '<div class="empty">❌ خطأ في تحميل الإشعارات</div>'; }); }
 
-        function renderProfile(c) {
-            if (!currentUser) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">👤</div><p>سجل الدخول لعرض الملف الشخصي</p><button class="btn btn-primary btn-sm" onclick="navigateTo(\'login\')">تسجيل الدخول</button></div>';
-                return;
-            }
-            const isStore = currentUser.accountType === 'store';
-            const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]');
-            c.innerHTML = `
-            <div class="glass" style="text-align:center;padding:20px;margin-bottom:12px;">
-                <div style="font-size:3rem;">${currentUser.profileImage?`<img src="${currentUser.profileImage}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">`:'👤'}</div>
-                <h2>${sanitizeHTML(currentUser.username)}</h2>
-                <p>📱 ${sanitizeHTML(currentUser.phone)}</p>
-                <p><span class="account-type-tag ${isStore?'store':'user'}">${isStore?'🏪 تاجر':'👤 مستخدم عادي'}</span></p>
-                <p>🪙 <strong id="profile-credits">${currentUser.credits||0}</strong></p>
-                <p style="font-size:0.7rem;color:var(--text3);">⭐ المفضلة: ${favs.length} إعلانات</p>
-                ${!isStore?`<button class="btn btn-sm btn-outline" onclick="upgradeToStore()">🔄 ترقية لحساب تاجر</button>`:''}
-            </div>
-            <button class="btn btn-outline btn-sm" onclick="showPrivacy()">📄 سياسة الخصوصية</button>
-            <button class="btn btn-outline btn-sm" style="margin-top:6px;" onclick="switchTab('support')">💬 الدعم الفني</button>
-            ${favs.length>0?`<button class="btn btn-outline btn-sm" style="margin-top:6px;" onclick="showFavorites()">⭐ المفضلة (${favs.length})</button>`:''}
-            <button class="btn btn-danger btn-sm" style="margin-top:10px;width:100%;" onclick="authLogout()">🚪 تسجيل الخروج</button>`;
-            setTimeout(() => {
-                db.ref('users/' + currentUser.id + '/credits').once('value').then(snap => {
-                    const el = document.getElementById('profile-credits');
-                    if (el) el.textContent = snap.val() || 0;
-                }).catch(() => {});
-            }, 300);
-        }
+        function renderProfile(c) { if (!currentUser) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">👤</div><p>سجل الدخول لعرض الملف الشخصي</p><button class="btn btn-primary btn-sm" onclick="navigateTo(\'login\')">تسجيل الدخول</button></div>'; return; } const
+            isStore = currentUser.accountType === 'store'; const favs = JSON.parse(localStorage.getItem('rabash_favs') ||
+                '[]');
+            c.innerHTML =
+                `<div class="glass" style="text-align:center;padding:20px;margin-bottom:12px;"><div style="font-size:3rem;">${currentUser.profileImage?`<img src="${currentUser.profileImage}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;">`:'👤'}</div><h2>${sanitizeHTML(currentUser.username)}</h2><p>📱 ${sanitizeHTML(currentUser.phone)}</p><p><span class="account-type-tag ${isStore?'store':'user'}">${isStore?'🏪 تاجر':'👤 مستخدم عادي'}</span></p><p>🪙 <strong id="profile-credits">${currentUser.credits||0}</strong></p><p style="font-size:0.7rem;color:var(--text3);">⭐ المفضلة: ${favs.length} إعلانات</p>${!isStore?`<button class="btn btn-sm btn-outline" onclick="upgradeToStore()">🔄 ترقية لحساب تاجر</button>`:''}${isStore?`<button class="btn btn-sm btn-purple" onclick="switchTab('dashboard')">📊 لوحة تحكم التاجر</button>`:''}</div><button class="btn btn-outline btn-sm" onclick="showPrivacy()">📄 سياسة الخصوصية</button><button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showTerms()">📋 الشروط والأحكام</button><button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showFAQ()">❓ الأسئلة الشائعة</button><button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="switchTab('support')">💬 الدعم الفني</button>${favs.length>0?`<button class="btn btn-outline btn-sm" style="margin-top:4px;" onclick="showFavorites()">⭐ المفضلة (${favs.length})</button>`:''}<button class="btn btn-danger btn-sm" style="margin-top:10px;width:100%;" onclick="authLogout()">🚪 تسجيل الخروج</button>`;
+            setTimeout(() => { db.ref('users/' + currentUser.id + '/credits').once('value').then(snap => { const el =
+                        document.getElementById('profile-credits'); if (el) el.textContent = snap.val() ||
+                    0; }).catch(() => {}); }, 300); }
 
-        function showFavorites() {
-            const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]');
-            if (favs.length === 0) { showToast('لا توجد مفضلات', 'error'); return; }
-            const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-content');
-            if (!modal || !content) return;
+        function showFavorites() { const favs = JSON.parse(localStorage.getItem('rabash_favs') || '[]'); if (favs.length === 0) {
+                showToast('لا توجد مفضلات', 'error'); return; } const modal = document.getElementById('detail-modal');
+            const content = document.getElementById('detail-content'); if (!modal || !content) return;
             modal.classList.remove('hidden');
             content.innerHTML =
                 '<h3>⭐ المفضلة</h3><div id="fav-list" style="max-height:50vh;overflow-y:auto;"><p>جاري التحميل...</p></div><button class="btn btn-outline btn-sm" style="margin-top:8px;width:100%;" onclick="closeDetail()">إغلاق</button>';
-            Promise.all(favs.map(id => db.ref('posts/' + id).once('value'))).then(snaps => {
-                const list = document.getElementById('fav-list');
-                if (!list) return;
-                let h = '';
-                snaps.forEach((snap, i) => {
-                    const p = snap.val();
-                    if (p && !p.deleted) h += `
-                    <div class="card" onclick="closeDetail();openPost('${favs[i]}')" style="margin:4px 0;">
-                        <div style="display:flex;align-items:center;gap:10px;padding:8px;">
-                            <div style="width:50px;height:50px;border-radius:8px;background:var(--input);flex-shrink:0;overflow:hidden;">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`:'📦'}</div>
-                            <div style="flex:1;"><strong>${sanitizeHTML(p.title)}</strong><br><small>💰${p.price}د.ل</small></div>
-                        </div>
-                    </div>`;
-                });
-                list.innerHTML = h || '<p style="color:var(--text3);">لا توجد مفضلات</p>';
-            }).catch(() => { const list = document.getElementById('fav-list'); if (list) list.innerHTML =
-                    '<p>خطأ في التحميل</p>'; });
-        }
+            Promise.all(favs.map(id => db.ref('posts/' + id).once('value'))).then(snaps => { const list = document
+                    .getElementById('fav-list'); if (!list) return; let h = '';
+                snaps.forEach((snap, i) => { const p = snap.val(); if (p && !p.deleted) h += `
+                <div class="card" onclick="closeDetail();openPost('${favs[i]}')" style="margin:4px 0;">
+                <div style="display:flex;align-items:center;gap:10px;padding:8px;">
+                <div style="width:50px;height:50px;border-radius:8px;background:var(--input);flex-shrink:0;overflow:hidden;">${p.image?`<img src="${p.image}" style="width:100%;height:100%;object-fit:cover;">`:'📦'}</div>
+                <div style="flex:1;"><strong>${sanitizeHTML(p.title)}</strong><br><small>💰${p.price}د.ل</small></div>
+                </div></div>`; });
+                list.innerHTML = h || '<p style="color:var(--text3);">لا توجد مفضلات</p>'; }).catch(() => { const list =
+                    document.getElementById('fav-list'); if (list) list.innerHTML =
+                '<p>خطأ في التحميل</p>'; }); }
+        async function upgradeToStore() { if (!currentUser || currentUser.accountType === 'store') return; if (!confirm(
+                'الترقية لمتجر تتطلب تحويل 5 دينار للرقم 0934214112. هل تريد المتابعة؟')) return; const provider = prompt(
+                'شركة الخط (مدار/ليبيانا):'); const transfer = prompt('رقم الهاتف المحول منه:'); if (!provider || !transfer) {
+                showToast('يجب إدخال البيانات', 'error'); return; } try { await db.ref('registrationRequests').push({ username: currentUser
+                        .username, phone: currentUser.phone, password: currentUser.password, accountType: 'store',
+                    provider, transferPhone: transfer, status: 'pending', createdAt: Date.now() });
+            showToast('تم إرسال طلب الترقية بنجاح', 'success'); } catch (e) { showToast('خطأ', 'error'); } }
 
-        async function upgradeToStore() {
-            if (!currentUser || currentUser.accountType === 'store') return;
-            if (!confirm('الترقية لمتجر تتطلب تحويل 5 دينار للرقم 0934214112. هل تريد المتابعة؟')) return;
-            const provider = prompt('شركة الخط (مدار/ليبيانا):');
-            const transfer = prompt('رقم الهاتف المحول منه:');
-            if (!provider || !transfer) { showToast('يجب إدخال البيانات', 'error'); return; }
-            try {
-                await db.ref('registrationRequests').push({
-                    username: currentUser.username,
-                    phone: currentUser.phone,
-                    password: currentUser.password,
-                    accountType: 'store',
-                    provider,
-                    transferPhone: transfer,
-                    status: 'pending',
-                    createdAt: Date.now()
-                });
-                showToast('تم إرسال طلب الترقية بنجاح', 'success');
-            } catch (e) { showToast('خطأ', 'error'); }
-        }
-
-        function renderSupport(c) {
-            if (!currentUser) {
-                c.innerHTML =
-                    '<div class="empty"><div class="empty-icon">💬</div><p>سجل الدخول للتواصل مع الدعم</p></div>';
-                return;
-            }
+        function renderSupport(c) { if (!currentUser) { c.innerHTML =
+                '<div class="empty"><div class="empty-icon">💬</div><p>سجل الدخول للتواصل مع الدعم</p></div>'; return; }
             c.innerHTML = '<div class="skeleton" style="height:80px;"></div>';
-            db.ref('support_chats').orderByChild('userId').equalTo(currentUser.id).once('value').then(snap => {
-                let msgs = [];
+            db.ref('support_chats').orderByChild('userId').equalTo(currentUser.id).once('value').then(snap => { let msgs = [];
                 snap.forEach(ch => msgs.push(ch.val()));
                 msgs.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
-                c.innerHTML = `
-                <h3>💬 تواصل مع الدعم الفني</h3>
-                <div id="supp-msgs" style="max-height:50vh;overflow-y:auto;">
-                    ${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser.id?'me':'other'}"><strong>${sanitizeHTML(m.senderName)}:</strong> ${sanitizeHTML(m.text)}</div>`).join('')}
-                </div>
-                <div style="display:flex;gap:6px;margin-top:8px;">
-                    <input id="supp-input" class="form-input" placeholder="اكتب رسالتك..." style="flex:1;">
-                    <button class="btn btn-sm btn-primary" onclick="sendSupport()">📤</button>
-                </div>`;
+                c.innerHTML =
+                    `<h3>💬 تواصل مع الدعم الفني</h3><div id="supp-msgs" style="max-height:50vh;overflow-y:auto;">${msgs.map(m=>`<div class="chat-bubble ${m.senderId===currentUser.id?'me':'other'}"><strong>${sanitizeHTML(m.senderName)}:</strong> ${sanitizeHTML(m.text)}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px;"><input id="supp-input" class="form-input" placeholder="اكتب رسالتك..." style="flex:1;"><button class="btn btn-sm btn-primary" onclick="sendSupport()">📤</button></div>`;
                 setTimeout(() => { const el = document.getElementById('supp-msgs'); if (el) el.scrollTop = el
-                        .scrollHeight; }, 100);
-            }).catch(() => { c.innerHTML = '<div class="empty">❌ خطأ</div>'; });
-        }
+                    .scrollHeight; }, 100); }).catch(() => { c.innerHTML = '<div class="empty">❌ خطأ</div>'; }); }
+        async function sendSupport() { const input = document.getElementById('supp-input'); const txt = input?.value.trim(); if (
+            !txt) return; try { await db.ref('support_chats').push({ userId: currentUser.id, senderName: currentUser
+                    .username, senderId: currentUser.id, text: txt, createdAt: Date.now() }); if (input) input.value =
+                '';
+            switchTab('support'); } catch (e) { console.error(e); } }
 
-        async function sendSupport() {
-            const input = document.getElementById('supp-input');
-            const txt = input?.value.trim();
-            if (!txt) return;
-            try {
-                await db.ref('support_chats').push({
-                    userId: currentUser.id,
-                    senderName: currentUser.username,
-                    senderId: currentUser.id,
-                    text: txt,
-                    createdAt: Date.now()
-                });
-                if (input) input.value = '';
-                switchTab('support');
-            } catch (e) { console.error(e); }
-        }
-
-        function showPrivacy() {
-            const modal = document.getElementById('detail-modal');
-            const content = document.getElementById('detail-content');
-            if (!modal || !content) return;
+        function showPrivacy() { const modal = document.getElementById('detail-modal'); const content = document.getElementById(
+                'detail-content'); if (!modal || !content) return;
             modal.classList.remove('hidden');
-            content.innerHTML = `
-            <h3 style="color:var(--accent);margin-bottom:12px;">📄 سياسة الخصوصية - رابش الجميل</h3>
-            <div style="max-height:55vh;overflow-y:auto;padding:10px;font-size:0.8rem;color:var(--text2);line-height:1.8;">
-                <p><strong>آخر تحديث:</strong> 2025</p>
-                <p>مرحباً بك في تطبيق "رابش الجميل". نحن نلتزم بحماية خصوصيتك وبياناتك الشخصية. تشرح هذه السياسة كيفية جمعنا واستخدامنا ومشاركتنا وحماية معلوماتك عند استخدامك للتطبيق.</p>
-                <h4 style="color:var(--text);margin-top:12px;">1. المعلومات التي نجمعها</h4>
-                <p>عند التسجيل، نجمع: الاسم الكامل، رقم الهاتف، كلمة المرور، شركة الاتصال، وبيانات التحويل المالي للتجار. كما نجمع المحتوى الذي تنشره مثل الإعلانات، رسائل الدردشة، التقييمات، وصور المنتجات.</p>
-                <h4 style="color:var(--text);margin-top:12px;">2. كيفية استخدام المعلومات</h4>
-                <p>نستخدم معلوماتك لتشغيل التطبيق، تمكين التواصل بين المشترين والبائعين، إرسال الإشعارات، وتحسين الخدمة. لا نستخدم بياناتك لأغراض تسويقية دون موافقتك.</p>
-                <h4 style="color:var(--text);margin-top:12px;">3. مشاركة المعلومات</h4>
-                <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك البيانات مع الجهات القانونية إذا طُلب ذلك بموجب القانون. رقم هاتفك يظهر في إعلاناتك لتسهيل التواصل.</p>
-                <h4 style="color:var(--text);margin-top:12px;">4. أمان البيانات</h4>
-                <p>نطبق إجراءات أمنية تقنية وتنظيمية لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفصاح. مع ذلك، لا يمكن ضمان الأمان بنسبة 100% عبر الإنترنت.</p>
-                <h4 style="color:var(--text);margin-top:12px;">5. حقوق المستخدم</h4>
-                <p>يحق لك طلب نسخة من بياناتك، تعديلها، أو حذفها. يمكنك إغلاق حسابك عبر التواصل مع الدعم. بعض البيانات قد تستمر لأغراض قانونية.</p>
-                <h4 style="color:var(--text);margin-top:12px;">6. ملفات تعريف الارتباط</h4>
-                <p>نستخدم LocalStorage لحفظ تفضيلاتك وجلسة الدخول. لا نستخدم ملفات تعريف ارتباط طرف ثالث.</p>
-                <h4 style="color:var(--text);margin-top:12px;">7. تغييرات على السياسة</h4>
-                <p>قد نحدث هذه السياسة من وقت لآخر. سيتم إشعارك بالتغييرات الجوهرية عبر التطبيق. استمرارك في الاستخدام يعتبر موافقة على الشروط المحدثة.</p>
-                <h4 style="color:var(--text);margin-top:12px;">8. الاتصال بنا</h4>
-                <p>للاستفسارات: قسم "الدعم" داخل التطبيق أو البريد الإلكتروني: support@rabash-aljmail.com</p>
-            </div>
-            <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
+            content.innerHTML =
+                `<h3 style="color:var(--accent);margin-bottom:12px;">📄 سياسة الخصوصية - رابش الجميل</h3><div style="max-height:55vh;overflow-y:auto;padding:10px;font-size:0.8rem;color:var(--text2);line-height:1.8;"><p><strong>آخر تحديث:</strong> 2025</p><p>مرحباً بك في تطبيق "رابش الجميل". نحن نلتزم بحماية خصوصيتك وبياناتك الشخصية. تشرح هذه السياسة كيفية جمعنا واستخدامنا ومشاركتنا وحماية معلوماتك عند استخدامك للتطبيق.</p><h4 style="color:var(--text);margin-top:12px;">1. المعلومات التي نجمعها</h4><p>عند التسجيل، نجمع: الاسم الكامل، رقم الهاتف، كلمة المرور، شركة الاتصال، وبيانات التحويل المالي للتجار. كما نجمع المحتوى الذي تنشره مثل الإعلانات، رسائل الدردشة، التقييمات، وصور المنتجات.</p><h4 style="color:var(--text);margin-top:12px;">2. كيفية استخدام المعلومات</h4><p>نستخدم معلوماتك لتشغيل التطبيق، تمكين التواصل بين المشترين والبائعين، إرسال الإشعارات، وتحسين الخدمة. لا نستخدم بياناتك لأغراض تسويقية دون موافقتك.</p><h4 style="color:var(--text);margin-top:12px;">3. مشاركة المعلومات</h4><p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك البيانات مع الجهات القانونية إذا طُلب ذلك بموجب القانون. رقم هاتفك يظهر في إعلاناتك لتسهيل التواصل.</p><h4 style="color:var(--text);margin-top:12px;">4. أمان البيانات</h4><p>نطبق إجراءات أمنية تقنية وتنظيمية لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفصاح. مع ذلك، لا يمكن ضمان الأمان بنسبة 100% عبر الإنترنت.</p><h4 style="color:var(--text);margin-top:12px;">5. حقوق المستخدم</h4><p>يحق لك طلب نسخة من بياناتك، تعديلها، أو حذفها. يمكنك إغلاق حسابك عبر التواصل مع الدعم. بعض البيانات قد تستمر لأغراض قانونية.</p><h4 style="color:var(--text);margin-top:12px;">6. ملفات تعريف الارتباط</h4><p>نستخدم LocalStorage لحفظ تفضيلاتك وجلسة الدخول. لا نستخدم ملفات تعريف ارتباط طرف ثالث.</p><h4 style="color:var(--text);margin-top:12px;">7. تغييرات على السياسة</h4><p>قد نحدث هذه السياسة من وقت لآخر. سيتم إشعارك بالتغييرات الجوهرية عبر التطبيق. استمرارك في الاستخدام يعتبر موافقة على الشروط المحدثة.</p><h4 style="color:var(--text);margin-top:12px;">8. الاتصال بنا</h4><p>للاستفسارات: قسم "الدعم" داخل التطبيق.</p></div><button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
         }
 
-        async function updateCredits() {
-            if (!currentUser) return;
-            try {
-                const snap = await db.ref('users/' + currentUser.id + '/credits').once('value');
-                const el = document.getElementById('header-credits');
-                if (el) {
-                    el.textContent = '🪙 ' + (snap.val() || 0);
-                    el.classList.remove('hidden');
-                }
-            } catch (e) {}
+        function showTerms() { const modal = document.getElementById('detail-modal'); const content = document.getElementById(
+                'detail-content'); if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            content.innerHTML =
+                `<h3 style="color:var(--accent);margin-bottom:12px;">📋 الشروط والأحكام</h3><div style="max-height:55vh;overflow-y:auto;padding:10px;font-size:0.8rem;color:var(--text2);line-height:1.8;"><p><strong>آخر تحديث:</strong> 2025</p><p>باستخدامك لتطبيق "رابش الجميل"، فإنك توافق على هذه الشروط والأحكام. يرجى قراءتها بعناية.</p><h4 style="color:var(--text);margin-top:12px;">1. قبول الشروط</h4><p>باستخدامك للتطبيق، أنت توافق على الالتزام بهذه الشروط. إذا كنت لا توافق، يرجى عدم استخدام التطبيق.</p><h4 style="color:var(--text);margin-top:12px;">2. الحسابات</h4><p>أنت مسؤول عن الحفاظ على سرية حسابك وكلمة المرور. يجب أن تكون المعلومات التي تقدمها دقيقة وكاملة.</p><h4 style="color:var(--text);margin-top:12px;">3. المحتوى</h4><p>أنت تحتفظ بجميع الحقوق للمحتوى الذي تنشره. بإنزال المحتوى، تمنحنا ترخيصاً غير حصري لعرضه وتوزيعه عبر المنصة.</p><h4 style="color:var(--text);margin-top:12px;">4. السلوك المحظور</h4><p>يمنع نشر محتوى غير قانوني، مسيء، احتيالي، أو ينتهك حقوق الآخرين.</p><h4 style="color:var(--text);margin-top:12px;">5. رسوم المتاجر</h4><p>يفرض رسم اشتراك قدره 5 دينار ليبي لتفعيل حساب المتجر. الرسم غير قابل للاسترداد.</p><h4 style="color:var(--text);margin-top:12px;">6. حدود المسؤولية</h4><p>نحن لسنا مسؤولين عن أي خسائر أو أضرار تنشأ عن استخدام التطبيق أو المحتوى المنشور من قبل المستخدمين.</p></div><button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
         }
 
-        // ==================== التهيئة ====================
-        function initTheme() {
-            const saved = localStorage.getItem('rabash_theme');
-            if (saved === 'light') {
-                isDarkMode = false;
-                document.body.classList.add('light-mode');
-            } else {
-                isDarkMode = true;
-                document.body.classList.remove('light-mode');
-            }
-            const themeToggle = document.getElementById('theme-toggle-settings');
-            if (themeToggle) {
-                if (isDarkMode) themeToggle.classList.add('active');
-                else themeToggle.classList.remove('active');
-            }
+        function showFAQ() { const modal = document.getElementById('detail-modal'); const content = document.getElementById(
+                'detail-content'); if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            content.innerHTML =
+                `<h3 style="color:var(--accent);margin-bottom:12px;">❓ الأسئلة الشائعة</h3><div style="max-height:55vh;overflow-y:auto;padding:10px;font-size:0.8rem;color:var(--text2);line-height:1.8;"><p><strong>س: كيف أسجل حساب جديد؟</strong><br>ج: اضغط على "سجل الآن" وأدخل بياناتك. الحساب العادي مجاني، وحساب المتجر يتطلب تحويل 5 دينار.</p><p><strong>س: كيف أضيف إعلان؟</strong><br>ج: بعد تسجيل الدخول، اضغط على زر + في الشريط السفلي واملأ بيانات الإعلان.</p><p><strong>س: هل يمكنني التواصل مع البائع مباشرة؟</strong><br>ج: نعم، يمكنك الاتصال أو مراسلة البائع عبر واتساب من داخل الإعلان.</p><p><strong>س: كيف أصبح تاجر؟</strong><br>ج: سجل كمتجر وحول 5 دينار للرقم المذكور. سيتم تفعيل حسابك بعد المراجعة.</p></div><button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
         }
 
-        // إخفاء شاشة البداية واستعادة الجلسة
-        setTimeout(() => {
-            const splash = document.getElementById('splash');
-            if (splash) {
-                splash.style.opacity = '0';
+        function showAbout() { const modal = document.getElementById('detail-modal'); const content = document.getElementById(
+                'detail-content'); if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            content.innerHTML =
+                `<h3 style="color:var(--accent);margin-bottom:12px;">ℹ️ عن رابش الجميل</h3><div style="max-height:55vh;overflow-y:auto;padding:10px;font-size:0.8rem;color:var(--text2);line-height:1.8;"><p><strong>رابش الجميل</strong> هي منصة ذكية لتنظيم سوق الروابش وقطع غيار السيارات في منطقة الجميل، ليبيا.</p><p>نساعدك في الوصول السريع للرابش المناسب دون عناء البحث تحت الشمس الحارقة. نوفر لك:</p><ul><li>بحث ذكي عن القطع وقطع الغيار</li><li>تصفح حسب نوع السيارة</li><li>تواصل مباشر مع التجار</li><li>تقييم المتاجر والمنتجات</li><li>تجربة سلسة وسريعة</li></ul><p><strong>الإصدار:</strong> 2.5.0</p><p><strong>صنع في ليبيا 🇱🇾</strong></p></div><button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="closeDetail()">❌ إغلاق</button>`;
+        }
+        async function updateCredits() { if (!currentUser) return; try { const snap = await db.ref('users/' + currentUser.id +
+                '/credits').once('value'); const el = document.getElementById('header-credits'); if (el) { el.textContent =
+                    '🪙 ' + (snap.val() || 0);
+                el.classList.remove('hidden'); } } catch (e) {} }
+
+        function initTheme() { const saved = localStorage.getItem('rabash_theme'); if (saved === 'light') { isDarkMode = false;
+                document.body.classList.add('light-mode'); } else { isDarkMode = true;
+                document.body.classList.remove('light-mode'); } const themeToggle = document.getElementById(
+                'theme-toggle-settings'); if (themeToggle) { if (isDarkMode) themeToggle.classList.add('active');
+            else themeToggle.classList.remove('active'); } }
+        setTimeout(() => { const splash = document.getElementById('splash'); if (splash) { splash.style.opacity = '0';
                 splash.style.pointerEvents = 'none';
-                setTimeout(() => splash.remove(), 500);
-            }
-            initTheme();
-            const saved = localStorage.getItem('rabash_user_final3');
-            if (saved) {
-                try {
-                    const u = JSON.parse(saved);
-                    db.ref('users/' + u.id).once('value').then(snap => {
-                        if (snap.exists() && snap.val().approved && !snap.val().banned) {
-                            currentUser = { id: u.id, ...snap.val() };
-                            switchTab('home');
-                            updateCredits();
-                        } else {
-                            localStorage.removeItem('rabash_user_final3');
-                        }
-                    }).catch(() => {
-                        localStorage.removeItem('rabash_user_final3');
-                    });
-                } catch (e) {
-                    localStorage.removeItem('rabash_user_final3');
-                }
-            }
-        }, 1600);
-
-        // منع السلوك الافتراضي للسحب للأسفل في المتصفح
-        document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('.content') || e.target.closest('.modal-sheet')) {
-                return;
-            }
-        }, { passive: false });
+                setTimeout(() => splash.remove(), 500); }
+            initTheme(); const saved = localStorage.getItem('rabash_user_final3'); if (saved) { try { const u = JSON.parse(
+                    saved);
+                db.ref('users/' + u.id).once('value').then(snap => { if (snap.exists() && snap.val().approved &&
+                        !snap.val().banned) { currentUser = { id: u.id, ...snap.val() };
+                        switchTab('home');
+                        updateCredits(); } else { localStorage.removeItem('rabash_user_final3'); } }).catch(() => {
+                    localStorage.removeItem('rabash_user_final3'); }); } catch (e) { localStorage.removeItem(
+                    'rabash_user_final3'); } } }, 1600);
+        document.addEventListener('touchmove', function(e) { if (e.target.closest('.content') || e.target.closest(
+                '.modal-sheet')) { return; } }, { passive: false });
     </script>
 </body>
 </html>
